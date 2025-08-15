@@ -110,6 +110,9 @@ CORS_ALLOWED_HEADERS = [
     'x-requested-with',
 ]
 
+# Add whitenoise for static files
+MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
+
 CORS_ALLOW_CREDENTIALS = True
 
 STATIC_URL = '/static/'
@@ -120,5 +123,10 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # Static files configuration for production
 if not DEBUG:
     STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+    # Serve media files in production
+    import os
+    if 'RENDER' in os.environ:
+        MEDIA_URL = '/media/'
+        MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
