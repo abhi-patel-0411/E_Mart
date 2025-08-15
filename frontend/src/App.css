@@ -1,0 +1,430 @@
+/* Add padding to body to account for fixed navbar */
+body {
+  padding-top: 80px;
+}
+
+/* Hide scrollbar but keep scroll functionality */
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+*::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* Ensure main content doesn't overlap with fixed navbar */
+main {
+  min-height: calc(100vh - 80px);
+}
+
+/* Mobile bottom nav spacing */
+@media (max-width: 1199.98px) {
+  body {
+    padding-bottom: 100px;
+  }
+  
+  main {
+    margin-bottom: 20px;
+  }
+}
+
+/* Hide footer on small devices */
+@media (max-width: 767.98px) {
+  .footer,
+  footer {
+    display: none !important;
+  }
+}
+
+/* Horizontal scroll sections */
+.horizontal-scroll {
+  overflow-x: auto;
+  flex-wrap: nowrap;
+  padding-bottom: 10px;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.horizontal-scroll > div {
+  min-width: 150px;
+  flex-shrink: 0;
+}
+
+/* Scrollbar styling */
+.category-tabs-wrapper::-webkit-scrollbar,
+.horizontal-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.category-tabs-wrapper::-webkit-scrollbar-track,
+.horizontal-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.category-tabs-wrapper::-webkit-scrollbar-thumb,
+.horizontal-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+.category-tabs-wrapper::-webkit-scrollbar-thumb:hover,
+.horizontal-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Firefox scrollbar */
+.category-tabs-wrapper,
+.horizontal-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) rgba(255, 255, 255, 0.1);
+}
+
+/* Smooth scrolling */
+.category-tabs-wrapper {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Category tabs styling */
+.category-tab {
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.category-tab:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Dropdown improvements */
+.dropdown-menu {
+  border: none;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+}
+
+/* Product card improvements */
+.product-card-modern {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 350px;
+}
+
+.product-image-wrapper {
+  height: 180px;
+  overflow: hidden;
+}
+
+.product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+}
+
+.product-title {
+  height: 2.8em;
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+
+.product-title .product-link {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.4;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.product-rating {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+  height: 20px;
+}
+
+.rating-stars {
+  display: flex;
+  gap: 2px;
+}
+
+.rating-stars i {
+  font-size: 0.7rem;
+  color: #ffc107;
+}
+
+.rating-count {
+  font-size: 0.7rem;
+  color: #6c757d;
+}
+
+.product-category-wrapper {
+  margin-bottom: 8px;
+  height: 18px;
+}
+
+.product-category {
+  font-size: 0.75rem;
+  color: #6c757d;
+  font-weight: 500;
+}
+
+.product-price {
+  margin-top: auto;
+  margin-bottom: 8px;
+}
+
+.product-buttons {
+  margin-top: auto;
+}
+
+.products-swiper .swiper-slide {
+  height: auto;
+  display: flex;
+}
+
+.products-swiper .swiper-slide .position-relative {
+  width: 100%;
+  display: flex;
+  
+}
+
+/* Swiper navigation improvements */
+.products-swiper .swiper-button-next,
+.products-swiper .swiper-button-prev {
+  color: #6366f1;
+  background: white;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  margin-top: -20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.products-swiper .swiper-button-next:after,
+.products-swiper .swiper-button-prev:after {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.products-swiper .swiper-pagination-bullet {
+  background: #6366f1;
+  opacity: 0.3;
+}
+
+.products-swiper .swiper-pagination-bullet-active {
+  opacity: 1;
+}
+
+/* Wishlist button active state */
+.action-btn.wishlist-btn.active {
+  background: rgba(220, 53, 69, 0.1);
+  border-color: #dc3545;
+}
+
+.btn-wishlist.active {
+  background: rgba(220, 53, 69, 0.1);
+  border-color: #dc3545;
+  color: #dc3545;
+}
+
+.btn-wishlist.active:hover {
+  background: rgba(220, 53, 69, 0.2);
+}
+
+/* Track Order Styles */
+.track-order-page {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  padding-top: 100px;
+}
+
+.track-card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.track-header {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  padding: 2rem;
+  color: white;
+}
+
+.timeline-step {
+  position: relative;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.step-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.step-icon.completed {
+  background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+  color: white;
+  transform: scale(1.1);
+}
+
+.step-icon.active {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: white;
+  animation: pulse 2s infinite;
+}
+
+.step-icon.pending {
+  background: #f3f4f6;
+  color: #9ca3af;
+  border: 2px solid #e5e7eb;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.info-card {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid #e2e8f0;
+}
+
+.item-card {
+  background: white;
+  border-radius: 10px;
+  padding: 1rem;
+  border: 1px solid #e2e8f0;
+  margin-bottom: 0.75rem;
+}
+
+.status-alert {
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: none;
+}
+
+/* Search Improvements */
+.search-suggestions {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  border: 1px solid #e2e8f0;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.suggestion-item {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.suggestion-item:hover {
+  background: #f8fafc;
+  transform: translateX(4px);
+}
+
+.suggestion-header {
+  background: #f8fafc;
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+}
+
+/* Home Page Card Responsiveness */
+.products-swiper {
+  overflow: hidden;
+  padding: 0 10px;
+}
+
+.products-swiper .swiper-slide {
+  height: auto;
+  display: flex;
+  overflow: hidden;
+}
+
+.products-swiper .swiper-slide .position-relative {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Badge positioning fixes */
+.position-absolute {
+  overflow: hidden;
+}
+
+.badge {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Responsive card grid */
+@media (max-width: 575.98px) {
+  .col-6 {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  
+  .products-swiper {
+    padding: 0 5px;
+  }
+  
+  .badge {
+    font-size: 0.5rem !important;
+    padding: 2px 4px !important;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .recommendations-section .container,
+  .featured-section .container {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  
+  .row.g-2 {
+    --bs-gutter-x: 0.5rem;
+    --bs-gutter-y: 0.5rem;
+  }
+}
+
+/* Swiper navigation responsive */
+@media (max-width: 767.98px) {
+  .products-swiper .swiper-button-next,
+  .products-swiper .swiper-button-prev {
+    display: none;
+  }
+}
+
+/* Existing styles... */

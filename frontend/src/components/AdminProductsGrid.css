@@ -1,0 +1,872 @@
+/* Mobile-first responsive design */
+.product-card {
+  transition: all 0.3s ease;
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.12) !important;
+  border-color: #0d6efd;
+}
+
+.admin-product-card {
+  position: relative;
+  min-height: 380px;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-image-container {
+  position: relative;
+  overflow: hidden;
+  height: 180px;
+  flex-shrink: 0;
+}
+
+.card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(13, 110, 253, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(2px);
+}
+
+.card-image-container:hover .card-overlay {
+  opacity: 1;
+}
+
+.overlay-content {
+  text-align: center;
+  transform: translateY(10px);
+  transition: transform 0.3s ease;
+}
+
+.card-image-container:hover .overlay-content {
+  transform: translateY(0);
+}
+
+.card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.admin-action-buttons {
+  display: flex;
+  gap: 6px;
+  margin-top: auto;
+}
+
+.btn-edit, .btn-delete {
+  position: relative;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.75rem;
+  padding: 8px 12px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+  min-height: 36px;
+}
+
+.btn-edit {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  color: white;
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+}
+
+.btn-edit:hover {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+  color: white;
+}
+
+.btn-delete {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+}
+
+.btn-delete:hover {
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
+  color: white;
+}
+
+.btn-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(16px, 4vw, 20px);
+  height: clamp(16px, 4vw, 20px);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.btn-edit:hover .btn-icon-wrapper {
+  background: rgba(255, 255, 255, 0.3);
+  transform: rotate(15deg) scale(1.1);
+}
+
+.btn-delete:hover .btn-icon-wrapper {
+  background: rgba(255, 255, 255, 0.3);
+  transform: rotate(-15deg) scale(1.1);
+}
+
+.btn-text {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.btn-ripple {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease, height 0.3s ease;
+}
+
+.btn-edit:active .btn-ripple,
+.btn-delete:active .btn-ripple {
+  width: 200px;
+  height: 200px;
+}
+
+/* Table Action Buttons */
+.table-action-buttons {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+}
+
+.table-btn {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.table-btn-edit {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  color: white;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+.table-btn-edit:hover {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  transform: translateY(-2px) rotate(5deg);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+}
+
+.table-btn-delete {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+}
+
+.table-btn-delete:hover {
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+  transform: translateY(-2px) rotate(-5deg);
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+}
+
+.table-btn-view {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+.table-btn-view:hover {
+  background: linear-gradient(135deg, #059669, #047857);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+}
+
+.table-btn i {
+  transition: transform 0.3s ease;
+}
+
+.table-btn:hover i {
+  transform: scale(1.2);
+}
+
+.table-btn-ripple {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  transform: translate(-50%, -50%);
+  transition: width 0.2s ease, height 0.2s ease;
+}
+
+.table-btn:active .table-btn-ripple {
+  width: 60px;
+  height: 60px;
+}
+
+.bg-gradient-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+}
+
+.form-check-input:checked {
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
+.btn-group .btn {
+  border-radius: 0;
+  font-size: 0.85rem;
+  padding: 6px 10px;
+}
+
+.btn-group .btn:first-child {
+  border-top-left-radius: 0.375rem;
+  border-bottom-left-radius: 0.375rem;
+}
+
+.btn-group .btn:last-child {
+  border-top-right-radius: 0.375rem;
+  border-bottom-right-radius: 0.375rem;
+}
+
+.btn-group .btn i {
+  font-size: 0.9rem;
+}
+
+.card-img-top {
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover .card-img-top {
+  transform: scale(1.08);
+}
+
+.badge {
+  font-size: 0.75em;
+  font-weight: 600;
+}
+
+.card-title {
+  transition: color 0.2s ease;
+}
+
+.form-check-input {
+  transform: scale(1.2);
+}
+
+/* Enhanced button styles */
+.btn-primary {
+  background: linear-gradient(135deg, #0d6efd, #0b5ed7);
+  border: none;
+  box-shadow: 0 2px 8px rgba(13, 110, 253, 0.3);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #0b5ed7, #0a58ca);
+  box-shadow: 0 4px 12px rgba(13, 110, 253, 0.4);
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, #dc3545, #c82333);
+  border: none;
+  box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
+}
+
+.btn-danger:hover {
+  background: linear-gradient(135deg, #c82333, #bd2130);
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
+}
+
+.btn-outline-info {
+  border-color: #17a2b8;
+  color: #17a2b8;
+  transition: all 0.2s ease;
+}
+
+.btn-outline-info:hover {
+  background: #17a2b8;
+  border-color: #17a2b8;
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(23, 162, 184, 0.3);
+}
+
+/* Responsive breakpoints */
+@media (max-width: 1200px) {
+  .admin-product-card {
+    min-height: 360px;
+  }
+}
+
+@media (max-width: 992px) {
+  .card-header .row {
+    text-align: center;
+  }
+  
+  .card-header .col-md-6:last-child {
+    margin-top: 1rem;
+  }
+  
+  .btn-group {
+    width: auto;
+    margin-left: 0.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-product-card {
+    min-height: 360px;
+    height: auto;
+  }
+  
+  .card-image-container {
+    height: 160px;
+    flex-shrink: 0;
+  }
+  
+  .card-body {
+    padding: 0.75rem;
+    min-height: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .card-title {
+    font-size: 0.85rem;
+    line-height: 1.3;
+    height: auto;
+    min-height: 2.6rem;
+    margin-bottom: 0;
+  }
+  
+  .admin-action-buttons {
+    gap: 4px;
+  }
+  
+  .btn-edit, .btn-delete {
+    font-size: 0.7rem;
+    padding: 6px 10px;
+    min-height: 32px;
+  }
+  
+  .btn-text {
+    display: none;
+  }
+  
+  .btn-icon-wrapper {
+    width: 16px;
+    height: 16px;
+    background: transparent;
+  }
+  
+  .table-action-buttons {
+    gap: 3px;
+  }
+  
+  .table-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 0.75rem;
+  }
+  
+  .card-overlay {
+    opacity: 0.8;
+    background: rgba(13, 110, 253, 0.7);
+  }
+  
+  .overlay-content {
+    transform: translateY(0);
+  }
+  
+  .overlay-content i {
+    font-size: 1.5rem;
+  }
+  
+  .overlay-content p {
+    font-size: 0.75rem;
+    margin-top: 0.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .admin-product-card {
+    min-height: 340px;
+    height: auto;
+  }
+  
+  .card-image-container {
+    height: 140px;
+    flex-shrink: 0;
+  }
+  
+  .card-body {
+    padding: 0.5rem;
+    min-height: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  
+  .card-title {
+    font-size: 0.8rem;
+    line-height: 1.3;
+    height: auto;
+    min-height: 2.4rem;
+    margin-bottom: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .badge {
+    font-size: 0.65rem;
+    padding: 0.15em 0.4em;
+  }
+  
+  .admin-action-buttons {
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .btn-edit, .btn-delete {
+    width: 100%;
+    font-size: 0.7rem;
+    padding: 6px;
+    min-height: 28px;
+    justify-content: center;
+  }
+  
+  .btn-icon-wrapper {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .table-btn {
+    width: 26px;
+    height: 26px;
+    font-size: 0.7rem;
+  }
+  
+  .badge {
+    font-size: 0.65rem;
+    padding: 0.2em 0.4em;
+  }
+  
+  .overlay-content i {
+    font-size: 1.2rem;
+  }
+  
+  .overlay-content p {
+    font-size: 0.7rem;
+  }
+  
+  /* Filter section responsive */
+  .card-body .row.g-4 {
+    --bs-gutter-x: 0.5rem;
+    --bs-gutter-y: 0.75rem;
+  }
+  
+  .form-label {
+    font-size: 0.8rem;
+    margin-bottom: 0.25rem;
+  }
+  
+  .form-control, .form-select {
+    font-size: 0.8rem;
+    padding: 0.375rem 0.5rem;
+  }
+  
+  .input-group-text {
+    padding: 0.375rem 0.5rem;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-product-card {
+    min-height: 320px;
+    height: auto;
+  }
+  
+  .card-image-container {
+    height: 120px;
+    flex-shrink: 0;
+  }
+  
+  .card-body {
+    padding: 0.4rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  
+  .card-title {
+    font-size: 0.75rem;
+    line-height: 1.2;
+    height: auto;
+    min-height: 2rem;
+    margin-bottom: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .btn-edit, .btn-delete {
+    font-size: 0.65rem;
+    padding: 4px;
+    min-height: 24px;
+  }
+  
+  .btn-icon-wrapper {
+    width: 12px;
+    height: 12px;
+  }
+  
+  .table-btn {
+    width: 24px;
+    height: 24px;
+    font-size: 0.65rem;
+  }
+  
+  .badge {
+    font-size: 0.6rem;
+    padding: 0.15em 0.3em;
+  }
+  
+  /* Header responsive */
+  .card-header h4 {
+    font-size: 1.1rem;
+  }
+  
+  .card-header p {
+    font-size: 0.8rem;
+  }
+  
+  .btn-lg {
+    font-size: 0.8rem;
+    padding: 0.5rem 1rem;
+  }
+}
+
+/* Table responsive styles */
+.table-responsive {
+  border-radius: 0;
+}
+
+@media (max-width: 768px) {
+  .table-responsive {
+    font-size: 0.8rem;
+  }
+  
+  .table th, .table td {
+    padding: 0.5rem 0.25rem;
+    vertical-align: middle;
+  }
+  
+  .table th {
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  
+  .table img {
+    width: 40px !important;
+    height: 40px !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .table-responsive {
+    font-size: 0.75rem;
+  }
+  
+  .table th, .table td {
+    padding: 0.4rem 0.2rem;
+  }
+  
+  .table th {
+    font-size: 0.7rem;
+  }
+  
+  .table img {
+    width: 35px !important;
+    height: 35px !important;
+  }
+  
+  /* Hide less important columns on mobile */
+  .table th:nth-child(5),
+  .table td:nth-child(5) {
+    display: none;
+  }
+}
+
+/* Mobile-first card improvements */
+@media (max-width: 480px) {
+  .table th:nth-child(4),
+  .table td:nth-child(4) {
+    display: none;
+  }
+}
+
+/* Ultra small devices */
+@media (max-width: 360px) {
+  .admin-product-card {
+    min-height: 300px;
+    height: auto;
+  }
+  
+  .card-image-container {
+    height: 100px;
+    flex-shrink: 0;
+  }
+  
+  .card-body {
+    padding: 0.3rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  
+  .card-title {
+    font-size: 0.7rem;
+    line-height: 1.2;
+    height: auto;
+    min-height: 1.8rem;
+    margin-bottom: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .btn-edit, .btn-delete {
+    font-size: 0.6rem;
+    padding: 3px;
+    min-height: 22px;
+  }
+  
+  .table-btn {
+    width: 22px;
+    height: 22px;
+    font-size: 0.6rem;
+  }
+  
+  /* Hide brand column on very small screens */
+  .table th:nth-child(3),
+  .table td:nth-child(3) {
+    display: none;
+  }
+}
+
+/* Loading and empty states */
+.empty-state {
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
+.empty-state i {
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.empty-state h5 {
+  font-size: clamp(1rem, 3vw, 1.25rem);
+  margin-bottom: 0.5rem;
+}
+
+.empty-state p {
+  font-size: clamp(0.8rem, 2vw, 0.9rem);
+  margin-bottom: 0;
+}
+
+/* Improved hover effects for touch devices */
+@media (hover: none) {
+  .product-card:hover {
+    transform: none;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08) !important;
+  }
+  
+  .card-overlay {
+    opacity: 0.6;
+    background: rgba(13, 110, 253, 0.6);
+  }
+  
+  .btn-edit:hover,
+  .btn-delete:hover,
+  .table-btn:hover {
+    transform: none;
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  .product-card,
+  .btn-edit,
+  .btn-delete,
+  .table-btn,
+  .card-overlay,
+  .overlay-content {
+    transition: none;
+  }
+  
+  .product-card:hover {
+    transform: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .product-card {
+    border: 2px solid #000;
+  }
+  
+  .btn-edit,
+  .btn-delete {
+    border: 1px solid #000;
+  }
+}
+/* Perfect card content layout without overflow */
+.admin-product-card .card-body > * {
+  flex-shrink: 0;
+}
+
+.admin-product-card .card-body .admin-action-buttons {
+  margin-top: auto;
+  flex-shrink: 0;
+}
+
+.admin-product-card .card-title {
+  word-break: break-word;
+  hyphens: auto;
+}
+
+.admin-product-card .badge {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.admin-product-card .fw-bold {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Ensure proper spacing between elements */
+.admin-product-card .mb-2:last-of-type {
+  margin-bottom: 0.5rem !important;
+}
+
+/* Fix button container */
+.admin-product-card .mt-auto {
+  margin-top: auto !important;
+  flex-shrink: 0;
+}
+
+/* Content area improvements */
+.admin-product-card .card-body > div:not(.admin-action-buttons):not(.mt-auto) {
+  margin-bottom: 0.5rem;
+}
+
+.admin-product-card .card-body > div:last-child {
+  margin-bottom: 0;
+}
+
+/* Prevent content overflow on all devices */
+.admin-product-card .card-body {
+  box-sizing: border-box;
+}
+
+.admin-product-card .card-body > * {
+  max-width: 100%;
+  word-wrap: break-word;
+}
+
+.admin-product-card .d-flex {
+  flex-wrap: wrap;
+}
+
+.admin-product-card .text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Responsive text sizing */
+@media (max-width: 576px) {
+  .admin-product-card .fw-bold {
+    font-size: clamp(0.75rem, 2vw, 0.9rem);
+  }
+  
+  .admin-product-card .text-primary {
+    font-size: clamp(0.8rem, 2.2vw, 1rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-product-card .fw-bold {
+    font-size: clamp(0.7rem, 1.8vw, 0.85rem);
+  }
+  
+  .admin-product-card .text-primary {
+    font-size: clamp(0.75rem, 2vw, 0.9rem);
+  }
+}
+
+@media (max-width: 360px) {
+  .admin-product-card .fw-bold {
+    font-size: clamp(0.65rem, 1.6vw, 0.8rem);
+  }
+  
+  .admin-product-card .text-primary {
+    font-size: clamp(0.7rem, 1.8vw, 0.85rem);
+  }
+}

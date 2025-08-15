@@ -1,0 +1,419 @@
+/* Global Responsive Fixes */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.container, .container-fluid {
+  /* max-width: 100%; */
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.row {
+  margin-left: -8px;
+  margin-right: -8px;
+}
+
+.col, [class*="col-"] {
+  padding-left: 8px;
+  padding-right: 8px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Mobile fixes for small devices */
+@media (max-width: 767px) {
+  body {
+    padding-bottom: 80px;
+  }
+  
+  .container, .container-fluid {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  
+  .row {
+    margin-left: -5px;
+    margin-right: -5px;
+  }
+  
+  .col, [class*="col-"] {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  
+  /* Card responsive fixes */
+  .card {
+    margin-bottom: 1rem;
+    border-radius: 12px;
+  }
+  
+  .card-body {
+    padding: 1rem;
+  }
+  
+  /* Text responsive */
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.6rem; }
+  h3 { font-size: 1.4rem; }
+  h4 { font-size: 1.2rem; }
+  h5 { font-size: 1.1rem; }
+  h6 { font-size: 1rem; }
+  
+  /* Button responsive */
+  .btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .btn-lg {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
+  
+  .btn-sm {
+    padding: 0.25rem 0.75rem;
+    font-size: 0.8rem;
+  }
+  
+  /* Table responsive */
+  .table-responsive {
+    border: none;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .table {
+    font-size: 0.85rem;
+  }
+  
+  .table th,
+  .table td {
+    padding: 0.5rem;
+    white-space: nowrap;
+  }
+  
+  /* Form responsive */
+  .form-control {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+  
+  /* Modal responsive */
+  .modal-dialog {
+    margin: 0.5rem;
+    max-width: calc(100% - 1rem);
+  }
+  
+  .modal-content {
+    border-radius: 12px;
+  }
+  
+  /* Navbar responsive */
+  .navbar-brand {
+    font-size: 1.1rem;
+  }
+  
+  .navbar-nav .nav-link {
+    padding: 0.5rem 1rem;
+  }
+  
+  /* Product card responsive */
+  .modern-product-card {
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    height: auto;
+  }
+  
+  .product-image-container {
+    height: 160px;
+  }
+  
+  .product-content {
+    padding: 12px;
+  }
+  
+  /* Admin responsive fixes */
+  .admin-dashboard {
+    padding: 0.5rem;
+  }
+  
+  .admin-stats-card {
+    margin-bottom: 0.75rem;
+  }
+  
+  .admin-nav-tabs {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 0.25rem;
+  }
+  
+  .admin-nav-tabs .nav-link {
+    display: inline-block;
+    min-width: 100px;
+    text-align: center;
+    font-size: 0.85rem;
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .admin-table {
+    font-size: 0.8rem;
+  }
+  
+  .admin-modal .modal-dialog {
+    margin: 0.25rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .container, .container-fluid {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+  
+  .row {
+    margin-left: -4px;
+    margin-right: -4px;
+  }
+  
+  .col, [class*="col-"] {
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+  
+  /* Extra small text */
+  h1 { font-size: 1.6rem; }
+  h2 { font-size: 1.4rem; }
+  h3 { font-size: 1.2rem; }
+  
+  /* Card extra small */
+  .card-body {
+    padding: 0.75rem;
+  }
+  
+  /* Button extra small */
+  .btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+  }
+  
+  /* Table extra small */
+  .table {
+    font-size: 0.8rem;
+  }
+  
+  .table th,
+  .table td {
+    padding: 0.4rem;
+  }
+  
+  /* Product card extra small */
+  .product-image-container {
+    height: 140px;
+  }
+  
+  .product-content {
+    padding: 10px;
+  }
+}
+
+/* Chart responsive fixes */
+@media (max-width: 767px) {
+  .chart-card {
+    margin-bottom: 1rem;
+  }
+  
+  .chart-card .card-body {
+    padding: 1rem;
+    height: 300px !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .chart-card .card-body {
+    padding: 0.75rem;
+    height: 250px !important;
+  }
+}
+
+/* Product detail page responsive fixes */
+@media (max-width: 767px) {
+  .product-detail-thumbnails {
+    order: 3;
+    margin-top: 1rem;
+  }
+  
+  .product-detail-thumbnails .d-flex {
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+    gap: 8px;
+    padding-bottom: 5px;
+  }
+  
+  .product-detail-thumbnails .d-flex::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .product-detail-thumbnails .d-flex > div {
+    flex: 0 0 auto;
+    width: 60px !important;
+    height: 60px !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .product-detail-thumbnails .d-flex > div {
+    width: 50px !important;
+    height: 50px !important;
+  }
+}
+
+/* Category horizontal scroll */
+.category-horizontal-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.category-horizontal-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.category-horizontal-scroll .row {
+  flex-wrap: nowrap;
+  width: max-content;
+}
+
+.category-horizontal-scroll .col {
+  flex: 0 0 auto;
+  width: auto;
+  min-width: 200px;
+}
+
+@media (max-width: 767px) {
+  .category-horizontal-scroll .col {
+    min-width: 160px;
+  }
+}
+
+@media (max-width: 576px) {
+  .category-horizontal-scroll .col {
+    min-width: 140px;
+  }
+}
+
+/* Analytics responsive */
+@media (max-width: 767px) {
+  .analytics-header {
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .analytics-header h2 {
+    font-size: 1.5rem;
+  }
+  
+  .metric-card {
+    margin-bottom: 1rem;
+  }
+  
+  .metric-card .card-body {
+    padding: 1rem;
+  }
+  
+  .metric-card h2 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Wishlist responsive */
+@media (max-width: 767px) {
+  .wishlist-header {
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .wishlist-card {
+    margin-bottom: 1rem;
+  }
+}
+
+/* Compare responsive */
+@media (max-width: 767px) {
+  .compare-hero {
+    padding: 2rem 0;
+  }
+  
+  .compare-hero h1 {
+    font-size: 2rem;
+  }
+  
+  .compare-mobile-card {
+    margin-bottom: 1rem;
+  }
+}
+
+/* Orders responsive */
+@media (max-width: 767px) {
+  .order-header {
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .order-card {
+    margin-bottom: 1rem;
+  }
+}
+
+/* Profile responsive */
+@media (max-width: 767px) {
+  .profile-header {
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .profile-card {
+    margin-bottom: 1rem;
+  }
+}
+
+/* Fix for overflow issues */
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Ensure images are responsive */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Fix for long text in cards */
+.card-title {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.card-text {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
