@@ -50,7 +50,7 @@ const AdminOfferFormBootstrap = ({ offer = null, onSave, onCancel }) => {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch('http://localhost:8000/api/products/');
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:8000/api'}/products/`);
       if (response.ok) {
         const data = await response.json();
         setProducts(data.results || data);
@@ -62,7 +62,7 @@ const AdminOfferFormBootstrap = ({ offer = null, onSave, onCancel }) => {
 
   const fetchCategories = async () => {
     try {
-      const response = await fetch('http://localhost:8000/api/categories/');
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:8000/api'}/categories/`);
       if (response.ok) {
         const data = await response.json();
         console.log('Categories fetched:', data);
@@ -96,8 +96,8 @@ const AdminOfferFormBootstrap = ({ offer = null, onSave, onCancel }) => {
     try {
       const token = localStorage.getItem('access_token');
       const url = offer 
-        ? `http://localhost:8000/api/admin/offers/update/${offer.id}/`
-        : 'http://localhost:8000/api/admin/offers/create/';
+        ? `${process.env.REACT_APP_API_URL || 'http://localhost:8000/api'}/admin/offers/update/${offer.id}/`
+        : `${process.env.REACT_APP_API_URL || 'http://localhost:8000/api'}/admin/offers/create/`;
       
       const method = offer ? 'PUT' : 'POST';
 

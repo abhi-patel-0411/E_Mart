@@ -19,7 +19,7 @@ export const applyOfferToCart = async (offerId, offerCode) => {
     
     console.log('Applying offer with payload:', payload);
     
-    const response = await fetch('http://localhost:8000/api/offers/apply/', {
+    const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:8000/api'}/offers/apply/`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -68,7 +68,7 @@ export const removeOfferFromCart = async (offerId) => {
       return { success: false, error: 'Authentication required' };
     }
     
-    const response = await fetch('http://localhost:8000/api/offers/remove/', {
+    const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:8000/api'}/offers/remove/`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -100,7 +100,7 @@ export const checkComboOfferEligibility = async (offer) => {
     if (!token) return { eligible: false, missingProducts: [] };
     
     // Use the dedicated endpoint to check eligibility
-    const response = await fetch(`http://localhost:8000/api/offers/check-combo-eligibility/${offer.id}/`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:8000/api'}/offers/check-combo-eligibility/${offer.id}/`, {
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',

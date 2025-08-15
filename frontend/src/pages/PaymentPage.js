@@ -206,7 +206,7 @@ const PaymentPage = () => {
       };
 
       // Create real payment intent
-      const paymentResponse = await fetch('http://localhost:8000/api/create-payment-intent/', {
+      const paymentResponse = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:8000/api'}/create-payment-intent/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

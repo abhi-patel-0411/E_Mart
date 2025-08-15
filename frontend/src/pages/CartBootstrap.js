@@ -17,7 +17,7 @@ const CartBootstrap = () => {
       // Auto-apply offers when cart loads
       const autoApplyOffers = async () => {
         try {
-          const response = await fetch('http://localhost:8000/api/cart/auto-apply-offers/', {
+          const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:8000/api'}/cart/auto-apply-offers/`, {
             method: 'POST',
             headers: {
               'Authorization': `Bearer ${localStorage.getItem('access_token')}`,

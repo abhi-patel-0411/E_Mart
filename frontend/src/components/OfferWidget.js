@@ -29,7 +29,7 @@ const OfferWidget = ({ onOfferApplied }) => {
     try {
       setLoading(true);
       const token = localStorage.getItem('access_token');
-      const response = await fetch('http://localhost:8000/api/cart/offers/', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:8000/api'}/cart/offers/`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -53,7 +53,7 @@ const OfferWidget = ({ onOfferApplied }) => {
     try {
       setApplying(offerId);
       const token = localStorage.getItem('access_token');
-      const response = await fetch('http://localhost:8000/api/cart/apply-offer/', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:8000/api'}/cart/apply-offer/`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -86,7 +86,7 @@ const OfferWidget = ({ onOfferApplied }) => {
   const removeOffer = async (offerId) => {
     try {
       const token = localStorage.getItem('access_token');
-      const response = await fetch('http://localhost:8000/api/cart/remove-offer/', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:8000/api'}/cart/remove-offer/`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,

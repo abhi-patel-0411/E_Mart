@@ -10,7 +10,7 @@ const OffersPage = () => {
 
   const fetchOffers = async () => {
     try {
-      const response = await fetch('http://localhost:8000/api/offers/');
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:8000/api'}/offers/`);
       if (response.ok) {
         const data = await response.json();
         setOffers(data);
@@ -30,7 +30,7 @@ const OffersPage = () => {
         return;
       }
 
-      const response = await fetch('http://localhost:8000/api/cart/apply-offer/', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:8000/api'}/cart/apply-offer/`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,

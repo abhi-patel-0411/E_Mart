@@ -38,7 +38,7 @@ export const CartProvider = ({ children }) => {
   const addToCart = async (productId) => {
     try {
       // Check if product is available before adding to cart
-      const productResponse = await fetch(`http://localhost:8000/api/products/${productId}/`);
+      const productResponse = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:8000/api'}/products/${productId}/`);
       if (productResponse.ok) {
         const productData = await productResponse.json();
         if (!productData.available) {

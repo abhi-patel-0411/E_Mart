@@ -44,7 +44,7 @@ const AddProduct = () => {
   const fetchCategories = async () => {
     try {
       console.log('Fetching categories...');
-      const response = await fetch('http://localhost:8000/api/categories/', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:8000/api'}/categories/`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('access_token')}`
         }
@@ -67,7 +67,7 @@ const AddProduct = () => {
         console.log('Creating category:', { name: newCategory.trim(), slug });
         
         // Direct API call
-        const response = await fetch('http://localhost:8000/api/categories/', {
+        const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:8000/api'}/categories/`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

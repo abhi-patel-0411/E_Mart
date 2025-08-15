@@ -46,7 +46,7 @@ const Home = () => {
 
         try {
           const mlResponse = await fetch(
-            `http://localhost:8000/api/recommendations/home/?t=${Date.now()}`
+            `${process.env.REACT_APP_API_URL || 'http://localhost:8000/api'}/recommendations/home/?t=${Date.now()}`
           );
           if (mlResponse.ok) {
             const mlData = await mlResponse.json();
