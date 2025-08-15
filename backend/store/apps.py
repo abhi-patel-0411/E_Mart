@@ -8,8 +8,8 @@ class StoreConfig(AppConfig):
     name = 'store'
     
     def ready(self):
-        # Only start cleanup in main process, not in reloader
-        if os.environ.get('RUN_MAIN') == 'true':
+        # Disable cleanup thread in production
+        if os.environ.get('DEBUG', 'True') == 'True' and os.environ.get('RUN_MAIN') == 'true':
             self.start_offer_cleanup()
     
     def start_offer_cleanup(self):
