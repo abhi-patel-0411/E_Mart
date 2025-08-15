@@ -136,21 +136,24 @@ function AppContent() {
 }
 
 function App() {
-  const [showLoading, setShowLoading] = useState(false);
+  const [showLoading, setShowLoading] = useState(true);
+  const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
     const hasSeenLoading = sessionStorage.getItem('hasSeenLoading');
-    if (!hasSeenLoading) {
-      setShowLoading(true);
+    if (hasSeenLoading) {
+      setShowLoading(false);
+      setIsInitialized(true);
     }
   }, []);
 
   const handleLoadingComplete = () => {
     sessionStorage.setItem('hasSeenLoading', 'true');
     setShowLoading(false);
+    setIsInitialized(true);
   };
 
-  if (showLoading) {
+  if (showLoading || !isInitialized) {
     return (
       <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <LoadingScreen onComplete={handleLoadingComplete} />
