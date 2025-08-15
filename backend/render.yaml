@@ -2,8 +2,9 @@ services:
   - type: web
     name: emart-backend
     env: python
+    runtime: python-3.11
     buildCommand: "./build.sh"
-    startCommand: "gunicorn --bind 0.0.0.0:$PORT wsgi:application"
+    startCommand: "gunicorn --bind 0.0.0.0:$PORT --workers 1 --timeout 120 wsgi:application"
     envVars:
       - key: SECRET_KEY
         generateValue: true
