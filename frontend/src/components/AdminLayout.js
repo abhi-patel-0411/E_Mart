@@ -127,16 +127,7 @@ const AdminLayout = ({ children }) => {
               style={{padding: '0.5rem'}}
             >
               <div className="bg-primary rounded-circle d-flex align-items-center justify-content-center" style={{width: '40px', height: '40px'}}>
-                {user?.profile_image ? (
-                  <img 
-                    src={user.profile_image} 
-                    alt="Profile" 
-                    className="rounded-circle" 
-                    style={{width: '100%', height: '100%', objectFit: 'cover'}}
-                  />
-                ) : (
-                  <i className="fas fa-user text-white"></i>
-                )}
+                <i className="fas fa-user text-white"></i>
               </div>
               <div className="d-none d-md-block text-start">
                 <div className="fw-medium text-dark" style={{fontSize: '0.9rem'}}>Hi, {user?.first_name || 'Admin'}!</div>
@@ -281,21 +272,41 @@ const AdminLayout = ({ children }) => {
       </div>
 
       {/* Mobile Bottom Navigation */}
-      <div className="d-md-none position-fixed bottom-0 start-0 end-0 bg-white border-top shadow-lg" style={{zIndex: 1030}}>
-        <div className="row g-0">
+      <div className="d-md-none position-fixed bottom-0 start-0 end-0 bg-white border-top shadow-lg" style={{zIndex: 9999, height: '70px', minHeight: '70px'}}>
+        <div className="d-flex justify-content-around align-items-center h-100 px-2">
           {sidebarLinks.slice(0, 5).map((item, index) => (
-            <div key={index} className="col">
-              <Link
-                to={item.path}
-                className={`d-flex flex-column align-items-center justify-content-center py-2 text-decoration-none ${
-                  location.pathname === item.path ? "text-primary" : "text-muted"
-                }`}
-                style={{fontSize: '0.75rem'}}
-              >
-                <div className="mb-1">{item.icon}</div>
-                <span style={{fontSize: '0.65rem'}}>{item.name}</span>
-              </Link>
-            </div>
+            <Link
+              key={index}
+              to={item.path}
+              className={`d-flex flex-column align-items-center justify-content-center text-decoration-none transition-all ${
+                location.pathname === item.path ? "text-primary" : "text-muted"
+              }`}
+              style={{
+                fontSize: '0.65rem',
+                fontWeight: '500',
+                padding: '0.2rem',
+                minWidth: '45px',
+                maxWidth: '55px',
+                flex: '1 1 auto',
+                transition: 'all 0.3s ease',
+                transform: location.pathname === item.path ? 'translateY(-2px)' : 'translateY(0)'
+              }}
+              onMouseEnter={(e) => {
+                if (location.pathname !== item.path) {
+                  e.currentTarget.style.color = '#6366f1';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (location.pathname !== item.path) {
+                  e.currentTarget.style.color = '#6b7280';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                }
+              }}
+            >
+              <div className="mb-1" style={{fontSize: '1.1rem', marginBottom: '0.15rem'}}>{item.icon}</div>
+              <span style={{fontSize: '0.65rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '100%'}}>{item.name}</span>
+            </Link>
           ))}
         </div>
       </div>

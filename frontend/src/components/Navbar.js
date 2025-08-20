@@ -252,29 +252,12 @@ const Navbar = () => {
             {isAuthenticated ? (
               <div className="dropdown">
                 <button 
-                  style={{
-                    ...userButtonStyle,
-                    padding: user?.profile_image ? '0.25rem 1rem 0.25rem 0.25rem' : '0.5rem 1.5rem'
-                  }}
+                  style={userButtonStyle}
                   className="user-btn-hover dropdown-toggle"
                   data-bs-toggle="dropdown"
                 >
                   <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
-                    {user?.profile_image ? (
-                      <img 
-                        src={user.profile_image} 
-                        alt="Profile" 
-                        style={{
-                          width: '32px', 
-                          height: '32px', 
-                          borderRadius: '50%', 
-                          objectFit: 'cover',
-                          border: '2px solid rgba(255,255,255,0.3)'
-                        }}
-                      />
-                    ) : (
-                      <i className="fas fa-user"></i>
-                    )}
+                    <i className="fas fa-user"></i>
                     <span className="desktop-only">{user?.first_name || user?.username}</span>
                   </div>
                 </button>
@@ -282,20 +265,7 @@ const Navbar = () => {
                   <li><span className="dropdown-header-modern">My Account</span></li>
                   <li>
                     <Link className="dropdown-item dropdown-item-modern" to="/profile">
-                      {user?.profile_image ? (
-                        <img 
-                          src={user.profile_image} 
-                          alt="Profile" 
-                          style={{
-                            width: '16px', 
-                            height: '16px', 
-                            borderRadius: '50%', 
-                            objectFit: 'cover'
-                          }}
-                        />
-                      ) : (
-                        <i className="fas fa-user" style={{width: '16px', color: '#6366f1'}}></i>
-                      )}
+                      <i className="fas fa-user" style={{width: '16px', color: '#6366f1'}}></i>
                       <span>Profile</span>
                       <span style={{marginLeft: 'auto', fontSize: '0.75rem', color: '#94a3b8'}}>⇧⌘P</span>
                     </Link>

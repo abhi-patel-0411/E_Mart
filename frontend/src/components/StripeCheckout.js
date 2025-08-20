@@ -10,7 +10,16 @@ import { useAuth } from '../context/AuthContext';
 import { toast } from 'react-toastify';
 import './StripeCheckout.css';
 
-const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
+let stripePromise;
+const getStripe = () => {
+  if (!stripePromise) {
+    stripePromise = loadStripe(
+      process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY || 
+      "pk_test_51RieweIC3UmOEaMXPBVq9aot6qEpna0JMfLxvy0pAxeB7RGCrFnVV1HO26YKt29jYC8yQtqwHgS8SX8gXvclB5da00GwpznZUx"
+    );
+  }
+  return stripePromise;
+};
 
 const CheckoutForm = ({ amount, onSuccess, onError, orderData }) => {
   const stripe = useStripe();
@@ -177,8 +186,27 @@ const CheckoutForm = ({ amount, onSuccess, onError, orderData }) => {
 };
 
 const StripeCheckout = ({ amount, onSuccess, onError, orderData }) => {
+  const [stripeError, setStripeError] = useState(null);
+  
+  useEffect(() => {
+    stripePromise.catch(error => {
+      console.error('Stripe loading error:', error);
+      setStripeError('Payment system unavailable. Please try again later.');
+      onError('Payment system unavailable. Please try again later.');
+    });
+  }, [onError]);
+  
+  if (stripeError) {
+    return (
+      <div className="alert alert-danger">
+        <i className="fas fa-exclamation-triangle me-2"></i>
+        {stripeError}
+      </div>
+    );
+  }
+  
   return (
-    <Elements stripe={stripePromise}>
+    <Elements stripe={getStripe()}>
       <CheckoutForm 
         amount={amount} 
         onSuccess={onSuccess} 

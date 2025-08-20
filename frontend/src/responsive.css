@@ -33,7 +33,12 @@ html, body {
 /* Mobile fixes for small devices */
 @media (max-width: 767px) {
   body {
-    padding-bottom: 80px;
+    padding-bottom: 80px !important;
+  }
+  
+  .products-page,
+  .featured-section {
+    padding-bottom: 30px;
   }
   
   .container, .container-fluid {

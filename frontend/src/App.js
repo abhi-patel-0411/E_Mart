@@ -104,7 +104,7 @@ function AppContent() {
               element={
                 <Elements
                   stripe={loadStripe(
-                    "pk_test_51RieweIC3UmOEaMXPBVq9aot6qEpna0JMfLxvy0pAxeB7RGCrFnVV1HO26YKt29jYC8yQtqwHgS8SX8gXvclB5da00GwpznZUx"
+                    process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY || "pk_test_51RieweIC3UmOEaMXPBVq9aot6qEpna0JMfLxvy0pAxeB7RGCrFnVV1HO26YKt29jYC8yQtqwHgS8SX8gXvclB5da00GwpznZUx"
                   )}
                 >
                   <PaymentPage />

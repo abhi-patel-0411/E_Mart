@@ -594,6 +594,17 @@ const Dashboard = () => {
               .stats-card h1 {
                 font-size: 1.8rem;
               }
+              .container-fluid {
+                padding-bottom: 90px;
+              }
+            }
+            @media (max-width: 576px) {
+              .container-fluid {
+                padding-bottom: 85px;
+              }
+              .row:last-child {
+                margin-bottom: 30px;
+              }
             }
           `}</style>
 
@@ -1836,6 +1847,9 @@ const Dashboard = () => {
               .product-card .card-body {
                 padding: 0.5rem !important;
                 min-height: 120px !important;
+              }
+              .container-fluid {
+                padding-bottom: 85px !important;
               }
               .product-card .card-title {
                 font-size: 0.75rem !important;

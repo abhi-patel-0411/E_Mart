@@ -22,9 +22,11 @@ const MobileBottomNav = () => {
     display: 'flex',
     justifyContent: 'space-around',
     alignItems: 'center',
-    padding: '1rem 0',
-    zIndex: 1000,
-    boxShadow: '0 -2px 10px rgba(0,0,0,0.1)'
+    padding: '0.5rem 0.25rem',
+    zIndex: 9999,
+    boxShadow: '0 -2px 10px rgba(0,0,0,0.1)',
+    height: '70px',
+    minHeight: '70px'
   };
 
   const navItemStyle = {
@@ -33,11 +35,13 @@ const MobileBottomNav = () => {
     alignItems: 'center',
     textDecoration: 'none',
     color: '#6b7280',
-    fontSize: '0.75rem',
+    fontSize: '0.65rem',
     fontWeight: '500',
-    padding: '0.25rem',
+    padding: '0.2rem',
     transition: 'all 0.3s ease',
-    minWidth: '60px'
+    minWidth: '45px',
+    maxWidth: '55px',
+    flex: '1 1 auto'
   };
 
   const activeNavItemStyle = {
@@ -47,21 +51,21 @@ const MobileBottomNav = () => {
   };
 
   const iconStyle = {
-    fontSize: '1.25rem',
-    marginBottom: '0.25rem',
+    fontSize: '1.1rem',
+    marginBottom: '0.15rem',
     transition: 'all 0.3s ease'
   };
 
   const badgeStyle = {
     position: 'absolute',
-    top: '-8px',
-    right: '-8px',
+    top: '-6px',
+    right: '-6px',
     backgroundColor: '#ef4444',
     color: 'white',
     borderRadius: '50%',
-    width: '18px',
-    height: '18px',
-    fontSize: '0.7rem',
+    width: '16px',
+    height: '16px',
+    fontSize: '0.6rem',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -87,7 +91,7 @@ const MobileBottomNav = () => {
         }}
       >
         <i className="fas fa-home" style={iconStyle}></i>
-        <span>Home</span>
+        <span style={{whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '100%'}}>Home</span>
       </Link>
       
       <Link 
@@ -107,7 +111,7 @@ const MobileBottomNav = () => {
         }}
       >
         <i className="fas fa-th-large" style={iconStyle}></i>
-        <span>Products</span>
+        <span style={{whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '100%'}}>Products</span>
       </Link>
       
       <Link 
@@ -132,7 +136,7 @@ const MobileBottomNav = () => {
             <span style={badgeStyle}>{getCartItemCount()}</span>
           )}
         </div>
-        <span>Cart</span>
+        <span style={{whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '100%'}}>Cart</span>
       </Link>
       
       {isAuthenticated ? (
@@ -154,7 +158,7 @@ const MobileBottomNav = () => {
             }}
           >
             <i className="fas fa-info-circle" style={iconStyle}></i>
-            <span>About</span>
+            <span style={{whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '100%'}}>About</span>
           </Link>
           
           <Link 
@@ -174,7 +178,7 @@ const MobileBottomNav = () => {
             }}
           >
             <i className="fas fa-envelope" style={iconStyle}></i>
-            <span>Contact</span>
+            <span style={{whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '100%'}}>Contact</span>
           </Link>
           
           <Link 
@@ -194,7 +198,7 @@ const MobileBottomNav = () => {
             }}
           >
             <i className="fas fa-user" style={iconStyle}></i>
-            <span>Profile</span>
+            <span style={{whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '100%'}}>Profile</span>
           </Link>
         </>
       ) : (
@@ -215,7 +219,7 @@ const MobileBottomNav = () => {
           }}
         >
           <i className="fas fa-sign-in-alt" style={iconStyle}></i>
-          <span>Login</span>
+          <span style={{whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '100%'}}>Login</span>
         </Link>
       )}
     </div>

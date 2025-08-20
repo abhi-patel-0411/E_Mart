@@ -88,8 +88,7 @@ const SmartSearchBar = ({ className = '' }) => {
 
   const handleSuggestionClick = (suggestion, type) => {
     if (type === 'category') {
-      const category = suggestion.toLowerCase().replace(/\s+/g, '-');
-      navigate(`/products?category=${category}`);
+      navigate(`/products?category=${encodeURIComponent(suggestion)}`);
     } else if (type === 'brand') {
       navigate(`/products?brand=${encodeURIComponent(suggestion)}`);
     } else {

@@ -196,11 +196,11 @@ const Products = () => {
         <div className="container position-relative">
           {!category ? (
             // Show all products when no category is selected
-            <div className="row g-3">
+            <div className="row g-1 g-sm-2 g-md-3">
               {products
                 .filter(product => product.available) // Only show available products
                 .map(product => (
-                  <div key={product.id} className="col-12 col-sm-6 col-md-4 col-lg-3">
+                  <div key={product.id} className="col-6 col-sm-4 col-md-3 col-lg-3">
                     <ProductCard product={product} />
                   </div>
                 ))
@@ -222,11 +222,11 @@ const Products = () => {
             </div>
           ) : (
             <>
-              <div className="row g-3">
+              <div className="row g-1 g-sm-2 g-md-3">
                 {products
                   .filter(product => product.available) // Only show available products
                   .map(product => (
-                    <div key={product.id} className="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div key={product.id} className="col-6 col-sm-4 col-md-3 col-lg-3">
                       <ProductCard product={product} />
                     </div>
                   ))

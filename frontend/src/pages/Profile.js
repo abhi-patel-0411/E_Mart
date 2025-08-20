@@ -17,8 +17,7 @@ const Profile = () => {
   });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [profileImage, setProfileImage] = useState(null);
-  const [imagePreview, setImagePreview] = useState(null);
+
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -31,11 +30,7 @@ const Profile = () => {
       const response = await userAPI.getProfile();
       setProfile(response.data);
       
-      // Set image preview from profile_image field
-      const profileImageUrl = response.data.profile_image || response.data.user?.profile_image;
-      if (profileImageUrl) {
-        setImagePreview(profileImageUrl);
-      }
+
     } catch (error) {
       console.error('Error fetching profile:', error);
       toast.error('Failed to load profile');
@@ -44,26 +39,7 @@ const Profile = () => {
     }
   };
 
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      if (!file.type.startsWith('image/')) {
-        toast.error('Please select a valid image file');
-        return;
-      }
-      if (file.size > 5 * 1024 * 1024) {
-        toast.error('Image size should be less than 5MB');
-        return;
-      }
-      
-      setProfileImage(file);
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        setImagePreview(event.target.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -86,32 +62,15 @@ const Profile = () => {
       formData.append('pincode', profile.pincode || '');
       formData.append('date_of_birth', profile.date_of_birth || '');
       
-      // Add image if selected
-      if (profileImage) {
-        formData.append('profile_image', profileImage);
-      }
+
       
       const response = await userAPI.updateProfile(formData);
       
       // Update local state
       setProfile(response.data);
       
-      // Update auth context with the updated user data including profile image
-      const updatedUser = {
-        ...response.data.user,
-        profile_image: response.data.profile_image || response.data.user?.profile_image
-      };
-      updateUser(updatedUser);
-      
-      // Update image preview
-      if (response.data.profile_image) {
-        setImagePreview(response.data.profile_image);
-      }
-      
-      // Clear file input
-      setProfileImage(null);
-      const fileInput = document.getElementById('profileImageInput');
-      if (fileInput) fileInput.value = '';
+      // Update auth context with the updated user data
+      updateUser(response.data.user);
       
       toast.success('Profile updated successfully!');
     } catch (error) {
@@ -154,52 +113,8 @@ const Profile = () => {
     <div style={{paddingTop: '120px', minHeight: '100vh'}}>
       <div className="container py-5">
         <div className="row">
-          {/* Profile Image Section */}
-          <div className="col-lg-4 mb-4">
-            <div className="card">
-              <div className="card-body text-center">
-                <div className="position-relative d-inline-block mb-3">
-                  <div 
-                    className="rounded-circle overflow-hidden border mx-auto d-flex align-items-center justify-content-center"
-                    style={{width: '150px', height: '150px', cursor: 'pointer'}}
-                    onClick={() => document.getElementById('profileImageInput').click()}
-                  >
-                    {imagePreview ? (
-                      <img 
-                        src={imagePreview} 
-                        alt="Profile" 
-                        style={{width: '100%', height: '100%', objectFit: 'cover'}}
-                      />
-                    ) : (
-                      <div className="d-flex align-items-center justify-content-center h-100 w-100 bg-light">
-                        <i className="fas fa-user fa-3x text-muted"></i>
-                      </div>
-                    )}
-                  </div>
-                  <button 
-                    className="btn btn-primary btn-sm rounded-circle position-absolute"
-                    style={{bottom: '10px', right: '10px', width: '35px', height: '35px'}}
-                    onClick={() => document.getElementById('profileImageInput').click()}
-                  >
-                    <i className="fas fa-camera"></i>
-                  </button>
-                  <input 
-                    type="file" 
-                    id="profileImageInput" 
-                    accept="image/*" 
-                    onChange={handleImageUpload} 
-                    style={{display: 'none'}} 
-                  />
-                </div>
-                <h4>{profile.user?.first_name} {profile.user?.last_name}</h4>
-                <p className="text-muted">@{profile.user?.username}</p>
-                <p className="text-muted small">{profile.user?.email}</p>
-              </div>
-            </div>
-          </div>
-
           {/* Profile Form Section */}
-          <div className="col-lg-8">
+          <div className="col-lg-12">
             <div className="card">
               <div className="card-header">
                 <h5 className="mb-0">Personal Information</h5>

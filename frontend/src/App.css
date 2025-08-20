@@ -21,11 +21,27 @@ main {
 /* Mobile bottom nav spacing */
 @media (max-width: 1199.98px) {
   body {
-    padding-bottom: 100px;
+    padding-bottom: 80px !important;
   }
   
   main {
     margin-bottom: 20px;
+    min-height: calc(100vh - 160px);
+  }
+  
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 480px) {
+  body {
+    padding-bottom: 80px !important;
+  }
+  
+  main {
+    margin-bottom: 15px;
   }
 }
 
@@ -392,8 +408,13 @@ main {
 /* Responsive card grid */
 @media (max-width: 575.98px) {
   .col-6 {
-    padding-left: 5px;
-    padding-right: 5px;
+    padding-left: 3px;
+    padding-right: 3px;
+    margin-bottom: 10px;
+  }
+  
+  .row:last-child {
+    margin-bottom: 40px;
   }
   
   .products-swiper {
@@ -404,6 +425,16 @@ main {
     font-size: 0.5rem !important;
     padding: 2px 4px !important;
   }
+  
+  .featured-section .container {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+  
+  .recommendations-section .container {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
 }
 
 @media (max-width: 767.98px) {
@@ -411,6 +442,11 @@ main {
   .featured-section .container {
     padding-left: 10px;
     padding-right: 10px;
+  }
+  
+  .row.g-1 {
+    --bs-gutter-x: 0.25rem;
+    --bs-gutter-y: 0.25rem;
   }
   
   .row.g-2 {

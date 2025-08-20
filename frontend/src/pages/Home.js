@@ -344,7 +344,7 @@ const Home = () => {
           <Swiper
             modules={[Navigation, Pagination]}
             spaceBetween={15}
-            slidesPerView={1}
+            slidesPerView={2}
             navigation
             pagination={{ clickable: true }}
             breakpoints={{
@@ -366,31 +366,31 @@ const Home = () => {
                   <div
                     className="position-absolute"
                     style={{
-                      top: "6px",
-                      right: "6px",
-                      zIndex: 10,
-                      maxWidth: "calc(100% - 12px)",
+                      top: "4px",
+                      right: "4px",
+                      zIndex: 5,
+                      maxWidth: "calc(100% - 8px)",
                     }}
                   >
                     <span
                       className="badge bg-success rounded-pill d-flex align-items-center"
                       title={`${product.total_orders || 0} orders`}
                       style={{
-                        fontSize: "0.6rem",
-                        padding: "3px 6px",
-                        minWidth: "20px",
-                        maxWidth: "100%",
+                        fontSize: "0.5rem",
+                        padding: "2px 4px",
+                        minWidth: "16px",
+                        maxWidth: "60px",
                         overflow: "hidden",
                         whiteSpace: "nowrap",
                       }}
                     >
                       <i
                         className="fas fa-fire"
-                        style={{ fontSize: "0.5rem", flexShrink: 0 }}
+                        style={{ fontSize: "0.4rem", flexShrink: 0 }}
                       ></i>
                       <span
-                        className="d-none d-sm-inline ms-1"
-                        style={{ overflow: "hidden", textOverflow: "ellipsis" }}
+                        className="d-inline ms-1"
+                        style={{ overflow: "hidden", textOverflow: "ellipsis", fontSize: "0.45rem" }}
                       >
                         {product.total_orders || 0}
                       </span>
@@ -415,7 +415,7 @@ const Home = () => {
           <Swiper
             modules={[Navigation, Pagination]}
             spaceBetween={15}
-            slidesPerView={1}
+            slidesPerView={2}
             navigation
             pagination={{ clickable: true }}
             breakpoints={{
@@ -437,10 +437,10 @@ const Home = () => {
                   <div
                     className="position-absolute"
                     style={{
-                      top: "6px",
-                      right: "6px",
-                      zIndex: 10,
-                      maxWidth: "calc(100% - 12px)",
+                      top: "4px",
+                      right: "4px",
+                      zIndex: 5,
+                      maxWidth: "calc(100% - 8px)",
                     }}
                   >
                     <span
@@ -449,21 +449,21 @@ const Home = () => {
                         product.average_rating || 0
                       } rating`}
                       style={{
-                        fontSize: "0.6rem",
-                        padding: "3px 6px",
-                        minWidth: "20px",
-                        maxWidth: "100%",
+                        fontSize: "0.5rem",
+                        padding: "2px 4px",
+                        minWidth: "16px",
+                        maxWidth: "60px",
                         overflow: "hidden",
                         whiteSpace: "nowrap",
                       }}
                     >
                       <i
                         className="fas fa-star"
-                        style={{ fontSize: "0.5rem", flexShrink: 0 }}
+                        style={{ fontSize: "0.4rem", flexShrink: 0 }}
                       ></i>
                       <span
-                        className="d-none d-sm-inline ms-1"
-                        style={{ overflow: "hidden", textOverflow: "ellipsis" }}
+                        className="d-inline ms-1"
+                        style={{ overflow: "hidden", textOverflow: "ellipsis", fontSize: "0.45rem" }}
                       >
                         {product.average_rating || "0.0"}
                       </span>
@@ -490,7 +490,7 @@ const Home = () => {
           <Swiper
             modules={[Navigation, Pagination]}
             spaceBetween={15}
-            slidesPerView={1}
+            slidesPerView={2}
             navigation
             pagination={{ clickable: true }}
             breakpoints={{
@@ -516,30 +516,30 @@ const Home = () => {
                   <div
                     className="position-absolute"
                     style={{
-                      top: "6px",
-                      right: "6px",
-                      zIndex: 10,
-                      maxWidth: "calc(100% - 12px)",
+                      top: "4px",
+                      right: "4px",
+                      zIndex: 5,
+                      maxWidth: "calc(100% - 8px)",
                     }}
                   >
                     <span
                       className="badge bg-primary rounded-pill d-flex align-items-center"
                       style={{
-                        fontSize: "0.6rem",
-                        padding: "3px 6px",
-                        minWidth: "20px",
-                        maxWidth: "100%",
+                        fontSize: "0.5rem",
+                        padding: "2px 4px",
+                        minWidth: "16px",
+                        maxWidth: "60px",
                         overflow: "hidden",
                         whiteSpace: "nowrap",
                       }}
                     >
                       <i
                         className="fas fa-robot"
-                        style={{ fontSize: "0.5rem", flexShrink: 0 }}
+                        style={{ fontSize: "0.4rem", flexShrink: 0 }}
                       ></i>
                       <span
-                        className="d-none d-sm-inline ms-1"
-                        style={{ overflow: "hidden", textOverflow: "ellipsis" }}
+                        className="d-inline ms-1"
+                        style={{ overflow: "hidden", textOverflow: "ellipsis", fontSize: "0.45rem" }}
                       >
                         {product.ml_score
                           ? Math.round(product.ml_score * 100) + "%"
@@ -564,7 +564,7 @@ const Home = () => {
             <h2 className="fw-bold display-5 mb-3">Featured Products</h2>
             <p className="text-muted lead">Most popular items this month</p>
           </div>
-          <div className="row g-2 g-sm-3">
+          <div className="row g-1 g-sm-2 g-md-3">
             {Array.isArray(products) && products.length > 0 ? (
               products.slice(0, 8).map((product, index) => (
                 <div
