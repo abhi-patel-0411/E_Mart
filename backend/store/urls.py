@@ -98,6 +98,7 @@ urlpatterns = [
     path('admin/offers/usage-stats/<int:offer_id>/', views.admin_offer_usage_stats, name='admin-offer-usage-stats'),
     path('admin/offers/debug-usage/', views.debug_offer_usage, name='debug-offer-usage'),
     path('admin/offers/<int:offer_id>/', views.admin_get_offer, name='admin-get-offer'),
+    path('admin/offers/cleanup-expired/', views.admin_cleanup_expired_offers, name='admin-cleanup-expired-offers'),
     
     # Categories Admin
     path('admin/categories/create/', views.admin_create_category, name='admin-create-category'),

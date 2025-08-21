@@ -48,14 +48,25 @@ const AdminOfferFormModal = ({
       fetchCategories();
 
       if (offer) {
+        // Format dates properly for datetime-local input
+        const formatDateForInput = (dateString) => {
+          if (!dateString) return '';
+          try {
+            const date = new Date(dateString);
+            // Adjust for timezone offset to show local time
+            const offset = date.getTimezoneOffset();
+            const localDate = new Date(date.getTime() - (offset * 60 * 1000));
+            return localDate.toISOString().slice(0, 16);
+          } catch (error) {
+            console.error('Date formatting error:', error);
+            return '';
+          }
+        };
+        
         setFormData({
           ...offer,
-          start_date: offer.start_date
-            ? new Date(offer.start_date).toISOString().slice(0, 16)
-            : "",
-          end_date: offer.end_date
-            ? new Date(offer.end_date).toISOString().slice(0, 16)
-            : "",
+          start_date: formatDateForInput(offer.start_date),
+          end_date: formatDateForInput(offer.end_date),
           product_ids: offer.products?.map((p) => p.id) || [],
           category_ids: offer.categories?.map((c) => c.id) || [],
           free_product_id: offer.free_product?.id || "",

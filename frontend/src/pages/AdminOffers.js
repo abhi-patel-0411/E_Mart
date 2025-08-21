@@ -410,6 +410,42 @@ const AdminOffers = () => {
           transform: translateY(-2px);
           box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
         }
+        .btn:hover {
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .btn-primary {
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          border: none;
+        }
+        .btn-primary:hover {
+          background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+        }
+        .btn-outline-warning:hover {
+          background: #ffc107;
+          border-color: #ffc107;
+          color: #000;
+        }
+        .btn-outline-info:hover {
+          background: #0dcaf0;
+          border-color: #0dcaf0;
+          color: #000;
+        }
+        .btn-outline-danger:hover {
+          background: #dc3545;
+          border-color: #dc3545;
+          color: #fff;
+        }
+        .btn-outline-success:hover {
+          background: #198754;
+          border-color: #198754;
+          color: #fff;
+        }
+        .card:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+          transition: all 0.3s ease;
+        }
         .card {
           border-radius: 12px;
         }
@@ -647,114 +683,128 @@ const AdminOffers = () => {
                 <div className="row g-4">
                   {filteredOffers.map((offer) => (
                 <div key={offer.id} className="col-12 mb-4">
-                  <div className="card border-0 shadow-sm hover-card">
-                    <div className="card-body">
-                      <div className="d-flex flex-column d-md-grid gap-4 p-2" style={{gridTemplateColumns: '2fr 1fr 1fr 1fr'}}>
-                        <div className="d-flex gap-4">
-                          <div className="p-3" style={{
-                            background: offer.is_active ? 'var(--color-primary, #667eea)' : '#6c757d', 
-                            borderRadius: '12px', 
-                            width: '60px', 
-                            height: '60px', 
-                            display: 'flex', 
-                            alignItems: 'center', 
-                            justifyContent: 'center',
-                            flexShrink: 0
-                          }}>
-                            <i className="fas fa-percentage fa-lg text-white"></i>
-                          </div>
-                          <div>
-                            <div className="d-flex flex-column justify-content-center">
-                              <p className="fw-medium mb-1">
-                                {offer.name}
-                                <span className={`badge ms-2 ${offer.is_active ? 'bg-success' : 'bg-secondary'}`} style={{fontSize: '0.7rem'}}>
+                  <div className="card border-0 shadow-sm" style={{borderRadius: '15px', background: '#ffffff', border: '1px solid #e9ecef'}}>
+                    <div className="card-body p-4">
+                      <div className="row align-items-center g-3">
+                        {/* Offer Info */}
+                        <div className="col-12 col-md-5">
+                          <div className="d-flex align-items-center gap-3">
+                            <div className="flex-shrink-0">
+                              <div className="rounded-circle d-flex align-items-center justify-content-center" 
+                                   style={{width: '50px', height: '50px', background: offer.is_active ? 'linear-gradient(135deg, #667eea, #764ba2)' : '#6c757d', boxShadow: '0 2px 8px rgba(0,0,0,0.1)'}}>
+                                <i className="fas fa-percentage text-white fs-6"></i>
+                              </div>
+                            </div>
+                            <div className="flex-grow-1">
+                              <div className="d-flex align-items-center gap-2 mb-1">
+                                <h6 className="fw-bold mb-0 text-dark">{offer.name}</h6>
+                                <span className={`badge ${offer.is_active ? 'bg-success' : 'bg-secondary'}`} style={{fontSize: '0.7rem'}}>
                                   {offer.is_active ? 'Active' : 'Inactive'}
                                 </span>
-                              </p>
-                              <p className="text-muted small mb-1">Code: <code className="bg-light px-2 py-1 rounded">{offer.code}</code></p>
-                              <p className="text-muted small mb-0">
-                                {offer.description ? 
-                                  (offer.description.length > 100 ? offer.description.substring(0, 100) + '...' : offer.description) 
-                                  : 'No description available'
-                                }
-                              </p>
+                              </div>
+                              <div className="d-flex align-items-center gap-2 mb-1">
+                                <span className="text-muted small">Code:</span>
+                                <code className="bg-light px-2 py-1 rounded border text-primary fw-medium" style={{fontSize: '0.8rem'}}>
+                                  {offer.code}
+                                </code>
+                              </div>
+                              <p className="text-muted small mb-0">{offer.description || 'Special promotional offer'}</p>
                             </div>
                           </div>
                         </div>
 
-                        <div className="small">
-                          <p className="fw-medium mb-1">Offer Details</p>
-                          <p className="mb-1">Type: {getOfferTypeLabel(offer.offer_type)}</p>
-                          <p className="mb-1">Usage: <span className="badge bg-info">{offer.used_count || 0}</span> times</p>
-                          {offer.min_order_value > 0 && (
-                            <p className="mb-0">Min Order: ₹{offer.min_order_value}</p>
-                          )}
+                        {/* Offer Details */}
+                        <div className="col-6 col-md-2">
+                          <div className="text-center">
+                            <div className="fw-bold text-primary mb-1" style={{fontSize: '1.1rem'}}>
+                              {offer.offer_type === 'discount' || offer.offer_type === 'category_offer' || offer.offer_type === 'first_time' ? 
+                                `${offer.discount_percentage}% OFF` : 
+                                offer.offer_type === 'flat' ? `₹${offer.flat_discount} OFF` : 'Special Offer'
+                              }
+                            </div>
+                            <div className="small text-muted">{getOfferTypeLabel(offer.offer_type)}</div>
+                          </div>
                         </div>
 
-                        <p className="fw-medium my-auto" style={{color: 'rgba(0,0,0,0.7)'}}>
-                          {offer.offer_type === 'discount' || offer.offer_type === 'category_offer' || offer.offer_type === 'first_time' ? 
-                            `${offer.discount_percentage}% OFF` : 
-                            offer.offer_type === 'flat' ? `₹${offer.flat_discount} OFF` : 'Special Offer'
-                          }
-                        </p>
-
-                        <div className="d-flex flex-column small gap-1">
-                          <p className="mb-0">Expires: {new Date(offer.end_date).toLocaleDateString()}</p>
-                          <p className="mb-0">Created: {new Date(offer.start_date).toLocaleDateString()}</p>
-                          <div className="d-flex gap-1 flex-wrap mt-1">
-                            {offer.auto_apply && (
-                              <span className="badge bg-primary" style={{fontSize: '0.65rem'}}>Auto Apply</span>
-                            )}
-                            {offer.first_time_only && (
-                              <span className="badge bg-success" style={{fontSize: '0.65rem'}}>First Time</span>
-                            )}
-                            {(offer.used_count || 0) > 10 && (
-                              <span className="badge bg-warning" style={{fontSize: '0.65rem'}}>Popular</span>
+                        {/* Usage Stats */}
+                        <div className="col-6 col-md-2">
+                          <div className="text-center">
+                            <div className="fw-bold text-info mb-1" style={{fontSize: '1.1rem'}}>{offer.used_count || 0}</div>
+                            <div className="small text-muted">Times Used</div>
+                            {offer.min_order_value > 0 && (
+                              <div className="small text-success mt-1">Min: ₹{offer.min_order_value}</div>
                             )}
                           </div>
-                          <div className="mt-2">
-                            <div className="d-flex flex-wrap gap-2">
-                              <button
-                                className="btn btn-outline-primary btn-sm"
-                                onClick={() => handleEditOffer(offer)}
-                                style={{borderRadius: '8px'}}
-                              >
-                                <i className="fas fa-edit me-1"></i>Edit
-                              </button>
-                              <button
-                                className={`btn btn-sm ${offer.is_active ? 'btn-outline-warning' : 'btn-outline-success'}`}
-                                onClick={() => handleToggleActive(offer)}
-                                style={{borderRadius: '8px'}}
-                              >
-                                <i className={`fas ${offer.is_active ? 'fa-pause' : 'fa-play'} me-1`}></i>
-                                {offer.is_active ? 'Pause' : 'Activate'}
-                              </button>
-                              {offer.is_active && (
-                                <button
-                                  className="btn btn-outline-warning btn-sm"
-                                  onClick={() => handleRevokeOffer(offer.id)}
-                                  style={{borderRadius: '8px'}}
-                                >
-                                  <i className="fas fa-ban me-1"></i>Revoke
-                                </button>
+                        </div>
+
+                        {/* Timeline */}
+                        <div className="col-12 col-md-3">
+                          <div className="text-center text-md-start">
+                            <div className="small mb-1">
+                              <span className="text-muted">Expires:</span> 
+                              <span className="fw-medium text-danger">{new Date(offer.end_date).toLocaleDateString()}</span>
+                            </div>
+                            <div className="small mb-2">
+                              <span className="text-muted">Created:</span> 
+                              <span className="fw-medium">{new Date(offer.start_date).toLocaleDateString()}</span>
+                            </div>
+                            <div className="d-flex flex-wrap gap-2 justify-content-center justify-content-md-start">
+                              {offer.auto_apply && (
+                                <span className="badge bg-primary text-white px-2 py-1" style={{fontSize: '0.75rem', fontWeight: '500'}}>
+                                  Auto Apply
+                                </span>
                               )}
-                              <button
-                                className="btn btn-outline-info btn-sm"
-                                onClick={() => refreshUsageStats(offer.id)}
-                                style={{borderRadius: '8px'}}
-                                title="Refresh usage statistics"
-                              >
-                                <i className="fas fa-sync me-1"></i>Refresh
-                              </button>
-                              <button
-                                className="btn btn-outline-danger btn-sm"
-                                onClick={() => handleDeleteOffer(offer.id)}
-                                style={{borderRadius: '8px'}}
-                              >
-                                <i className="fas fa-trash me-1"></i>Delete
-                              </button>
+                              {offer.first_time_only && (
+                                <span className="badge bg-success text-white px-2 py-1" style={{fontSize: '0.75rem', fontWeight: '500'}}>
+                                  First Time
+                                </span>
+                              )}
+                              {(offer.used_count || 0) > 10 && (
+                                <span className="badge bg-warning text-dark px-2 py-1" style={{fontSize: '0.75rem', fontWeight: '500'}}>
+                                  Popular
+                                </span>
+                              )}
                             </div>
                           </div>
+                        </div>
+                      </div>
+
+                      {/* Action Buttons */}
+                      <div className="mt-3 pt-3 border-top">
+                        <div className="d-flex flex-wrap gap-2 justify-content-center justify-content-md-start">
+                          <button className="btn btn-primary btn-sm px-3 py-2" 
+                                  onClick={() => handleEditOffer(offer)}
+                                  style={{borderRadius: '8px', fontWeight: '500'}}>
+                            <i className="fas fa-edit me-2"></i>Edit Offer
+                          </button>
+                          
+                          <button className={`btn btn-sm px-3 py-2 ${offer.is_active ? 'btn-outline-warning' : 'btn-outline-success'}`} 
+                                  onClick={() => handleToggleActive(offer)}
+                                  style={{borderRadius: '8px', fontWeight: '500'}}>
+                            <i className={`fas ${offer.is_active ? 'fa-pause' : 'fa-play'} me-2`}></i>
+                            {offer.is_active ? 'Pause' : 'Activate'}
+                          </button>
+                          
+                          <button className="btn btn-outline-info btn-sm px-3 py-2" 
+                                  onClick={() => refreshUsageStats(offer.id)}
+                                  style={{borderRadius: '8px', fontWeight: '500'}}
+                                  title="Refresh usage statistics">
+                            <i className="fas fa-sync me-2"></i>Refresh
+                          </button>
+                          
+                          {offer.is_active && (
+                            <button className="btn btn-outline-warning btn-sm px-3 py-2" 
+                                    onClick={() => handleRevokeOffer(offer.id)}
+                                    style={{borderRadius: '8px', fontWeight: '500'}}>
+                              <i className="fas fa-ban me-2"></i>Revoke
+                            </button>
+                          )}
+                          
+                          <button className="btn btn-outline-danger btn-sm px-3 py-2" 
+                                  onClick={() => handleDeleteOffer(offer.id)}
+                                  style={{borderRadius: '8px', fontWeight: '500'}}>
+                            <i className="fas fa-trash me-2"></i>Delete
+                          </button>
                         </div>
                       </div>
                     </div>

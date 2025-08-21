@@ -1030,15 +1030,31 @@ def admin_remove_compare(request, compare_id):
 def get_active_offers(request):
     from django.utils import timezone
     now = timezone.now()
+    
+    # Auto-delete expired offers
+    expired_offers = Offer.objects.filter(
+        end_date__lt=now
+    )
+    expired_count = expired_offers.count()
+    expired_offers.delete()
+    
+    # Get active offers
     offers = Offer.objects.filter(
         is_active=True,
         start_date__lte=now,
         end_date__gt=now
     )
-    # Filter out expired offers
-    valid_offers = [offer for offer in offers if not offer.is_expired()]
-    serializer = OfferSerializer(valid_offers, many=True)
-    return Response(serializer.data)
+    
+    serializer = OfferSerializer(offers, many=True)
+    response_data = serializer.data
+    
+    if expired_count > 0:
+        response_data = {
+            'offers': response_data,
+            'message': f'{expired_count} expired offers were automatically removed'
+        }
+    
+    return Response(response_data)
 
 
 
@@ -1053,6 +1069,12 @@ def get_applicable_offers(request):
     
     from django.utils import timezone
     now = timezone.now()
+    
+    # Auto-delete expired offers from database
+    expired_offers = Offer.objects.filter(
+        end_date__lt=now
+    )
+    expired_offers.delete()
     
     # Auto-clean expired offers from cart
     offers_removed = cart.clean_expired_offers()
@@ -1377,8 +1399,18 @@ def admin_create_offer(request):
         offer_type = request.data.get('offer_type', 'discount')
         
         # Parse and validate dates
-        start_date = parse_datetime(request.data.get('start_date'))
-        end_date = parse_datetime(request.data.get('end_date'))
+        try:
+            start_date_str = request.data.get('start_date')
+            if 'T' not in start_date_str:
+                start_date_str += 'T00:00:00'
+            start_date = parse_datetime(start_date_str)
+            
+            end_date_str = request.data.get('end_date')
+            if 'T' not in end_date_str:
+                end_date_str += 'T23:59:59'
+            end_date = parse_datetime(end_date_str)
+        except (ValueError, TypeError):
+            return Response({'error': 'Invalid date format'}, status=status.HTTP_400_BAD_REQUEST)
         
         if not start_date:
             return Response({'error': 'Invalid start date format'}, status=status.HTTP_400_BAD_REQUEST)
@@ -1443,12 +1475,8 @@ def admin_list_offers(request):
     if not request.user.is_staff:
         return Response({'error': 'Admin access required'}, status=status.HTTP_403_FORBIDDEN)
     
-    from django.utils import timezone
-    now = timezone.now()
-    offers = Offer.objects.filter(
-        is_active=True,
-        end_date__gt=now
-    ).order_by('-created_at')
+    # Get all offers for admin (don't auto-delete, let admin decide)
+    offers = Offer.objects.all().order_by('-created_at')
     serializer = OfferSerializer(offers, many=True)
     return Response(serializer.data)
 
@@ -1459,12 +1487,10 @@ def admin_update_offer(request, offer_id):
         return Response({'error': 'Admin access required'}, status=status.HTTP_403_FORBIDDEN)
     
     try:
-        offer = get_object_or_404(Offer, id=offer_id)
-        
-
-        
-        # Handle date fields
+        from django.utils import timezone
         from django.utils.dateparse import parse_datetime
+        
+        offer = get_object_or_404(Offer, id=offer_id)
         
         # Update all fields from request data
         if 'name' in request.data:
@@ -1485,7 +1511,6 @@ def admin_update_offer(request, offer_id):
             offer.buy_quantity = request.data['buy_quantity']
         if 'get_quantity' in request.data:
             offer.get_quantity = request.data['get_quantity']
-
         if 'min_order_value' in request.data:
             offer.min_order_value = request.data['min_order_value']
         if 'priority' in request.data:
@@ -1497,11 +1522,28 @@ def admin_update_offer(request, offer_id):
         if 'first_time_only' in request.data:
             offer.first_time_only = request.data['first_time_only']
         
-        # Handle date fields
+        # Handle date fields with validation
         if 'start_date' in request.data and request.data['start_date']:
-            offer.start_date = parse_datetime(request.data['start_date'])
+            try:
+                start_date_str = request.data['start_date']
+                if 'T' not in start_date_str:
+                    start_date_str += 'T00:00:00'
+                start_date = parse_datetime(start_date_str)
+                if start_date:
+                    offer.start_date = start_date
+            except (ValueError, TypeError):
+                return Response({'error': 'Invalid start date format'}, status=status.HTTP_400_BAD_REQUEST)
+        
         if 'end_date' in request.data and request.data['end_date']:
-            offer.end_date = parse_datetime(request.data['end_date'])
+            try:
+                end_date_str = request.data['end_date']
+                if 'T' not in end_date_str:
+                    end_date_str += 'T23:59:59'
+                end_date = parse_datetime(end_date_str)
+                if end_date:
+                    offer.end_date = end_date
+            except (ValueError, TypeError):
+                return Response({'error': 'Invalid end date format'}, status=status.HTTP_400_BAD_REQUEST)
         
         offer.save()
         
@@ -1738,11 +1780,28 @@ def admin_get_offer(request, offer_id):
     if not request.user.is_staff:
         return Response({'error': 'Admin access required'}, status=status.HTTP_403_FORBIDDEN)
     
-    from django.utils import timezone
-    now = timezone.now()
-    offer = get_object_or_404(Offer, id=offer_id, is_active=True, end_date__gt=now)
-    serializer = OfferSerializer(offer)
-    return Response(serializer.data)
+    try:
+        offer = get_object_or_404(Offer, id=offer_id)
+        serializer = OfferSerializer(offer)
+        return Response(serializer.data)
+    except Offer.DoesNotExist:
+        return Response({'error': 'Offer not found'}, status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def admin_cleanup_expired_offers(request):
+    if not request.user.is_staff:
+        return Response({'error': 'Admin access required'}, status=status.HTTP_403_FORBIDDEN)
+    
+    from .offer_cleanup import cleanup_expired_offers
+    result = cleanup_expired_offers()
+    
+    return Response({
+        'success': True,
+        'message': f'Cleanup completed: {result["expired_offers_deleted"]} offers deleted, {result["carts_updated"]} carts updated',
+        'expired_offers_deleted': result['expired_offers_deleted'],
+        'carts_updated': result['carts_updated']
+    })
 
 # Search Views
 @api_view(['GET'])

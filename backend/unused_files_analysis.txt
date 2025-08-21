@@ -1,0 +1,85 @@
+UNUSED FILES ANALYSIS - E-MART BACKEND
+=====================================
+
+POTENTIALLY UNUSED FILES (Safe to delete):
+==========================================
+
+1. app.py
+   - Reason: Duplicate WSGI application setup. wsgi.py already handles this.
+   - Impact: None, wsgi.py is the standard Django WSGI file.
+
+2. create_admin.py
+   - Reason: Utility script for creating admin user. Not part of main application.
+   - Impact: Can be deleted if admin user already exists.
+
+3. create_superuser.py
+   - Reason: Another utility script for creating superuser. Duplicate functionality.
+   - Impact: Can be deleted if admin user already exists.
+
+4. 2.0.0
+   - Reason: Appears to be a version file or leftover artifact.
+   - Impact: Not referenced anywhere in the codebase.
+
+5. simple_checkout.py (if exists)
+   - Reason: May be an old checkout implementation replaced by checkout_views.py
+   - Impact: Check if it's imported anywhere first.
+
+FILES TO KEEP (ACTIVELY USED):
+=============================
+
+Core Django Files:
+- manage.py (Django management)
+- settings.py (Django settings)
+- urls.py (URL routing)
+- wsgi.py (WSGI application)
+
+Store App Files:
+- models.py (Database models)
+- serializers.py (API serializers)
+- views.py (Main views)
+- admin.py (Django admin)
+- apps.py (App configuration)
+- __init__.py (Python package)
+
+Imported Utility Files:
+- analytics.py (Used in views.py)
+- views_combo_eligibility.py (Used in views.py)
+- stock_utils.py (Used in views.py)
+- product_utils.py (Used in views.py)
+- revenue_utils.py (Used in views.py)
+
+View Modules (Used in URLs):
+- ml_views.py
+- simple_ml_views.py
+- dynamic_ml_views.py
+- database_ml_views.py
+- revenue_refund_views.py
+- checkout_views.py
+- payment_views.py
+- stripe_advanced.py
+
+Configuration Files:
+- requirements.txt
+- runtime.txt
+- .env.example
+- .gitignore
+- build.sh
+- gunicorn.conf.py
+- render.yaml
+
+Database Files:
+- db.sqlite3 (Keep for data)
+- All migration files in migrations/
+
+Management Commands:
+- cleanup_offers.py
+
+RECOMMENDATION:
+==============
+Start by deleting these files in order of safety:
+1. 2.0.0 (safest)
+2. create_admin.py (if admin exists)
+3. create_superuser.py (if admin exists)
+4. app.py (wsgi.py handles this)
+
+Always backup before deleting!

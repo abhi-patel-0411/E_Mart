@@ -188,6 +188,8 @@ class OfferSerializer(serializers.ModelSerializer):
     free_product = ProductSerializer(read_only=True)
     badge_text = serializers.SerializerMethodField()
     can_user_use = serializers.SerializerMethodField()
+    start_date = serializers.DateTimeField(format='%Y-%m-%dT%H:%M')
+    end_date = serializers.DateTimeField(format='%Y-%m-%dT%H:%M')
     
     class Meta:
         model = Offer
