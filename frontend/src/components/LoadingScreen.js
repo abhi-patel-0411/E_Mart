@@ -4,7 +4,7 @@ const LoadingScreen = ({ onComplete }) => {
   React.useEffect(() => {
     const timer = setTimeout(() => {
       onComplete();
-    }, 5000);
+    }, 1500);
     return () => clearTimeout(timer);
   }, [onComplete]);
 

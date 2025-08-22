@@ -274,7 +274,7 @@ const AdminLayout = ({ children }) => {
       {/* Mobile Bottom Navigation */}
       <div className="d-md-none position-fixed bottom-0 start-0 end-0 bg-white border-top shadow-lg" style={{zIndex: 9999, height: '70px', minHeight: '70px'}}>
         <div className="d-flex justify-content-around align-items-center h-100 px-2">
-          {sidebarLinks.slice(0, 5).map((item, index) => (
+          {sidebarLinks.filter(link => ['Overview', 'Products', 'Users', 'Orders', 'Offers', 'Analytics'].includes(link.name)).map((item, index) => (
             <Link
               key={index}
               to={item.path}

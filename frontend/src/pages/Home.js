@@ -46,7 +46,9 @@ const Home = () => {
 
         try {
           const mlResponse = await fetch(
-            `${process.env.REACT_APP_API_URL || 'http://localhost:8000/api'}/recommendations/home/?t=${Date.now()}`
+            `${
+              process.env.REACT_APP_API_URL || "http://localhost:8000/api"
+            }/recommendations/home/?t=${Date.now()}`
           );
           if (mlResponse.ok) {
             const mlData = await mlResponse.json();
@@ -390,7 +392,11 @@ const Home = () => {
                       ></i>
                       <span
                         className="d-inline ms-1"
-                        style={{ overflow: "hidden", textOverflow: "ellipsis", fontSize: "0.45rem" }}
+                        style={{
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          fontSize: "0.45rem",
+                        }}
                       >
                         {product.total_orders || 0}
                       </span>
@@ -463,7 +469,11 @@ const Home = () => {
                       ></i>
                       <span
                         className="d-inline ms-1"
-                        style={{ overflow: "hidden", textOverflow: "ellipsis", fontSize: "0.45rem" }}
+                        style={{
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          fontSize: "0.45rem",
+                        }}
                       >
                         {product.average_rating || "0.0"}
                       </span>
@@ -539,7 +549,11 @@ const Home = () => {
                       ></i>
                       <span
                         className="d-inline ms-1"
-                        style={{ overflow: "hidden", textOverflow: "ellipsis", fontSize: "0.45rem" }}
+                        style={{
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          fontSize: "0.45rem",
+                        }}
                       >
                         {product.ml_score
                           ? Math.round(product.ml_score * 100) + "%"

@@ -139,6 +139,7 @@ const MobileBottomNav = () => {
         <span style={{whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '100%'}}>Cart</span>
       </Link>
       
+
       {isAuthenticated ? (
         <>
           <Link 

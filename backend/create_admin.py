@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 
 def create_admin():
     username = 'admin'
-    email = 'admin@furniture.com'
+    email = 'admin@emart.com'
     password = 'admin123'
     
     if User.objects.filter(username=username).exists():

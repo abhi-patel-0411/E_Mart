@@ -154,20 +154,33 @@ const Orders = () => {
               <div className="card-body">
                 <div className="d-flex flex-column d-md-grid gap-4 p-2" style={{gridTemplateColumns: '2fr 1fr 1fr 1fr'}}>
                   <div className="d-flex gap-4">
-                    {/* Updated image with responsive sizing */}
+                    {/* Product images */}
                     <div className="d-flex align-items-center justify-content-center">
-                      <img 
-                        className="opacity-50" 
-                        src="https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/e-commerce/boxIcon.svg" 
-                        alt="boxIcon" 
-                        style={{
-                          width: '150px',
-                          height: '120px',
-                          objectFit: 'cover',
-                          paddingLeft: '20px',
-                          paddingTop: '20px',
-                        }}
-                      />
+                      {order.items && order.items.length > 0 ? (
+                        <img 
+                          src={order.items[0].product?.image_url || 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=120&h=120&fit=crop'} 
+                          alt={order.items[0].product?.name || 'Product'}
+                          style={{
+                            width: '120px',
+                            height: '120px',
+                            objectFit: 'cover',
+                            borderRadius: '8px',
+                            border: '1px solid #e9ecef'
+                          }}
+                        />
+                      ) : (
+                        <div 
+                          className="d-flex align-items-center justify-content-center bg-light"
+                          style={{
+                            width: '120px',
+                            height: '120px',
+                            borderRadius: '8px',
+                            border: '1px solid #e9ecef'
+                          }}
+                        >
+                          <i className="fas fa-box text-muted fa-2x"></i>
+                        </div>
+                      )}
                     </div>
                     <div>
                       {order.items?.map((item, itemIndex) => (
@@ -251,7 +264,7 @@ const Orders = () => {
         </div>
       </section>
       
-      <style jsx>{`
+      <style>{`
         .hover-card {
           transition: all 0.3s ease;
           border-radius: 12px;

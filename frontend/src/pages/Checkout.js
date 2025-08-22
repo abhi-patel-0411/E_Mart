@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 import { ordersAPI } from '../services/api';
 import { toast } from 'react-toastify';
-import StripePayment from '../components/StripePaymentPro';
+
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import AOS from 'aos';
@@ -401,16 +401,7 @@ const Checkout = () => {
         </div>
       </section>
 
-      {showPayment && (
-        <Elements stripe={stripePromise}>
-          <StripePayment
-            amount={totalAmount}
-            onSuccess={handlePaymentSuccess}
-            onError={handlePaymentError}
-            onClose={() => setShowPayment(false)}
-          />
-        </Elements>
-      )}
+
     </div>
   );
 };

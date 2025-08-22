@@ -410,6 +410,22 @@ const AdminAnalytics = () => {
           transform: translateY(-3px);
           box-shadow: 0 15px 40px rgba(0,0,0,0.15);
         }
+        @media (max-width: 767px) {
+          .chart-container {
+            height: 250px !important;
+            max-height: 250px !important;
+            overflow: hidden !important;
+          }
+          .chart-body {
+            padding: 0.5rem !important;
+          }
+        }
+        .chart-wrapper {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          overflow: hidden;
+        }
       `}</style>
 
       {/* Header */}
@@ -598,12 +614,13 @@ const AdminAnalytics = () => {
                 Sales Trends & AI Predictions
               </h6>
             </div>
-            <div className="card-body p-3" style={{ height: "350px" }}>
+            <div className="card-body chart-body chart-container p-3" style={{ height: "350px" }}>
               <Line
                 data={getSalesChartData()}
                 options={{
                   responsive: true,
                   maintainAspectRatio: false,
+                  devicePixelRatio: 1,
                   interaction: {
                     mode: "index",
                     intersect: false,
@@ -684,12 +701,13 @@ const AdminAnalytics = () => {
                 Category Revenue
               </h6>
             </div>
-            <div className="card-body p-3" style={{ height: "350px" }}>
+            <div className="card-body chart-body chart-container p-3" style={{ height: "350px" }}>
               <Doughnut
                 data={getCategoryData()}
                 options={{
                   responsive: true,
                   maintainAspectRatio: false,
+                  devicePixelRatio: 1,
                   plugins: {
                     legend: {
                       position: "right",
@@ -734,12 +752,13 @@ const AdminAnalytics = () => {
                 Revenue vs Refunds Trends
               </h6>
             </div>
-            <div className="card-body p-3" style={{ height: "350px" }}>
+            <div className="card-body chart-body chart-container p-3" style={{ height: "350px" }}>
               <Line
                 data={getRevenueRefundData()}
                 options={{
                   responsive: true,
                   maintainAspectRatio: false,
+                  devicePixelRatio: 1,
                   interaction: {
                     mode: "nearest",
                     intersect: false,

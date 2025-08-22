@@ -35,7 +35,7 @@ const CartBootstrap = () => {
       
       autoApplyOffers();
     }
-  }, [isAuthenticated, cart.items?.length, fetchCart]);
+  }, [isAuthenticated, cart.items?.length]);
 
   const handleQuantityChange = async (itemId, newQuantity) => {
     const result = await updateCartItem(itemId, newQuantity);

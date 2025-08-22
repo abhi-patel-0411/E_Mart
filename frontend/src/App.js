@@ -6,8 +6,7 @@ import {
   useLocation,
 } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
+
 import { CompareProvider } from "./context/CompareContext";
 import { ReactLenis } from "lenis/react";
 import Navbar from "./components/Navbar";
@@ -23,9 +22,7 @@ import CartBootstrap from "./pages/CartBootstrap";
 import Wishlist from "./pages/Wishlist";
 import Compare from "./pages/Compare";
 import Checkout from "./pages/Checkout";
-import PaymentPage from "./pages/PaymentPage";
 import StripePaymentPage from "./pages/StripePaymentPage";
-import PaymentSuccess from "./pages/PaymentSuccess";
 import Orders from "./pages/Orders";
 import TrackOrder from "./pages/TrackOrder";
 import Profile from "./pages/Profile";
@@ -37,12 +34,12 @@ import About from "./pages/About";
 import Dashboard from "./pages/Dashboard";
 import AdminOffers from "./pages/AdminOffers";
 import AddProduct from "./pages/AddProduct";
-import OffersPage from "./pages/OffersPage";
+// import OffersPage from "./pages/OffersPage";
 import AdminAnalytics from "./components/AdminAnalytics";
 import AdminLayout from "./components/AdminLayout";
 import AdminOrders from "./pages/AdminOrders";
 import AdminWishlist from "./pages/AdminWishlist";
-import AdminMLDashboard from "./pages/AdminMLDashboard";
+// import AdminMLDashboard from "./pages/AdminMLDashboard";
 import NotFound from "./pages/NotFound";
 
 import "./App.css";
@@ -58,13 +55,38 @@ function AppContent() {
   const isAuthRoute =
     location.pathname === "/login" || location.pathname === "/register";
 
-  const isNotFoundRoute = !["/", "/products", "/cart", "/wishlist", "/compare", "/checkout", "/payment", "/payment-legacy", "/payment-success", "/orders", "/profile", "/offers", "/contact", "/about", "/login", "/register", "/dashboard", "/admin/offers", "/admin/add-product", "/admin/products", "/admin/users", "/admin/orders", "/admin/wishlists", "/admin/analytics", "/admin/ml-dashboard"].some(route => 
-      location.pathname === route || 
-      location.pathname.startsWith("/products/") || 
+  const isNotFoundRoute = ![
+    "/",
+    "/products",
+    "/cart",
+    "/wishlist",
+    "/compare",
+    "/checkout",
+    "/payment",
+    "/orders",
+    "/profile",
+    "/offers",
+    "/contact",
+    "/about",
+    "/login",
+    "/register",
+    "/dashboard",
+    "/admin/offers",
+    "/admin/add-product",
+    "/admin/products",
+    "/admin/users",
+    "/admin/orders",
+    "/admin/wishlists",
+    "/admin/analytics",
+    "/admin/ml-dashboard",
+  ].some(
+    (route) =>
+      location.pathname === route ||
+      location.pathname.startsWith("/products/") ||
       location.pathname.startsWith("/track-order/") ||
       location.pathname.startsWith("/dashboard") ||
       location.pathname.startsWith("/admin")
-    );
+  );
 
   return (
     <ReactLenis root>
@@ -88,7 +110,7 @@ function AppContent() {
                 </AdminLayout>
               }
             />
-            <Route path="/admin/ml-dashboard" element={<AdminMLDashboard />} />
+            {/* <Route path="/admin/ml-dashboard" element={<AdminMLDashboard />} /> */}
 
             {/* Public Routes */}
             <Route path="/" element={<Home />} />
@@ -99,23 +121,10 @@ function AppContent() {
             <Route path="/compare" element={<Compare />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/payment" element={<StripePaymentPage />} />
-            <Route
-              path="/payment-legacy"
-              element={
-                <Elements
-                  stripe={loadStripe(
-                    process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY || "pk_test_51RieweIC3UmOEaMXPBVq9aot6qEpna0JMfLxvy0pAxeB7RGCrFnVV1HO26YKt29jYC8yQtqwHgS8SX8gXvclB5da00GwpznZUx"
-                  )}
-                >
-                  <PaymentPage />
-                </Elements>
-              }
-            />
-            <Route path="/payment-success" element={<PaymentSuccess />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/track-order/:orderId" element={<TrackOrder />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/offers" element={<OffersPage />} />
+
             <Route path="/contact" element={<Contact />} />
             <Route path="/about" element={<About />} />
             <Route path="/login" element={<Login />} />
@@ -140,7 +149,7 @@ function App() {
   const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
-    const hasSeenLoading = sessionStorage.getItem('hasSeenLoading');
+    const hasSeenLoading = sessionStorage.getItem("hasSeenLoading");
     if (hasSeenLoading) {
       setShowLoading(false);
       setIsInitialized(true);
@@ -148,7 +157,7 @@ function App() {
   }, []);
 
   const handleLoadingComplete = () => {
-    sessionStorage.setItem('hasSeenLoading', 'true');
+    sessionStorage.setItem("hasSeenLoading", "true");
     setShowLoading(false);
     setIsInitialized(true);
   };

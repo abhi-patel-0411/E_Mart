@@ -18,7 +18,7 @@ from .serializers import (
 from .analytics import get_analytics_data
 
 # Import combo eligibility function
-from .views_combo_eligibility import check_combo_eligibility
+# from .views_combo_eligibility import check_combo_eligibility
 from .stock_utils import update_checkout_stock
 from .product_utils import admin_toggle_product_availability
 
@@ -584,51 +584,134 @@ def refund_analytics(request):
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
-def get_home_recommendations(request):
-    """Get multiple types of recommendations for home page"""
-    import sys
-    import os
-    sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/../')
-    try:
-        from ml_comparison import ml_comparison
-    except ImportError:
-        ml_comparison = None
-    from django.db.models import Count
+# def get_home_recommendations(request):
+#     """Get multiple types of recommendations for home page"""
+#     import sys
+#     import os
+#     sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/../')
+#     try:
+#         from ml_comparison import ml_comparison
+#     except ImportError:
+#         ml_comparison = None
+#     from django.db.models import Count
     
+#     try:
+#         # Most Ordered Products
+#         most_ordered = Product.objects.filter(available=True).annotate(
+#             order_count=Count('orderitem')
+#         ).order_by('-order_count')[:6]
+        
+#         # Most Popular (by reviews)
+#         most_popular = Product.objects.filter(available=True).annotate(
+#             review_count=Count('reviews')
+#         ).order_by('-review_count')[:6]
+        
+#         # KNN ML Recommendations
+#         knn_recommendations = []
+#         best_ml_recommendations = []
+        
+#         if ml_comparison:
+#             try:
+#                 knn_recommendations = ml_comparison.get_recommendations('KNN', 6)
+#                 best_ml_recommendations = ml_comparison.get_recommendations('Linear_Regression', 6)
+#             except Exception as e:
+#                 print(f"ML recommendations error: {e}")
+#                 knn_recommendations = []
+#                 best_ml_recommendations = []
+        
+#         return Response({
+#             'most_ordered': ProductSerializer(most_ordered, many=True).data,
+#             'most_popular': ProductSerializer(most_popular, many=True).data,
+#             'knn_recommendations': knn_recommendations,
+#             'best_ml_recommendations': best_ml_recommendations
+#         })
+#     except Exception as e:
+#         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def product_by_id(request, product_id):
+    """Get product by ID - used by cart context"""
     try:
-        # Most Ordered Products
-        most_ordered = Product.objects.filter(available=True).annotate(
-            order_count=Count('orderitem')
-        ).order_by('-order_count')[:6]
+        product = get_object_or_404(Product, id=product_id)
+        serializer = ProductSerializer(product)
+        return Response(serializer.data)
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def product_reviews_by_slug(request, slug):
+    """Get product reviews by slug - used by frontend"""
+    try:
+        product = get_object_or_404(Product, slug=slug)
+        reviews = Review.objects.filter(product=product).order_by('-created_at')
+        serializer = ReviewSerializer(reviews, many=True)
+        return Response(serializer.data)
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def auto_apply_offers(request):
+    """Auto-apply applicable offers to cart"""
+    try:
+        cart, created = Cart.objects.get_or_create(user=request.user)
+        cart_items = cart.items.all()
         
-        # Most Popular (by reviews)
-        most_popular = Product.objects.filter(available=True).annotate(
-            review_count=Count('reviews')
-        ).order_by('-review_count')[:6]
+        if not cart_items:
+            return Response({
+                'success': True,
+                'applied_offers': 0,
+                'message': 'No items in cart to apply offers'
+            })
         
-        # KNN ML Recommendations
-        knn_recommendations = []
-        best_ml_recommendations = []
+        # Get all active auto-apply offers
+        from django.utils import timezone
+        active_offers = Offer.objects.filter(
+            is_active=True,
+            auto_apply=True,
+            start_date__lte=timezone.now(),
+            end_date__gte=timezone.now()
+        )
         
-        if ml_comparison:
-            try:
-                knn_recommendations = ml_comparison.get_recommendations('KNN', 6)
-                best_ml_recommendations = ml_comparison.get_recommendations('Linear_Regression', 6)
-            except Exception as e:
-                print(f"ML recommendations error: {e}")
-                knn_recommendations = []
-                best_ml_recommendations = []
+        applied_count = 0
+        current_offers = cart.applied_offers or []
+        applied_offer_ids = [o.get('offer_id') for o in current_offers]
+        
+        for offer in active_offers:
+            # Skip if already applied
+            if offer.id in applied_offer_ids:
+                continue
+                
+            # Check if offer applies to cart
+            result = offer.apply_offer(cart_items, request.user)
+            if result['success']:
+                # Add to applied offers
+                new_offer = {
+                    'offer_id': offer.id,
+                    'offer_name': result['offer_name'],
+                    'offer_type': result['offer_type'],
+                    'discount_amount': float(result['discount_amount']),
+                    'badge_text': result.get('badge_text', ''),
+                    'auto_apply': True
+                }
+                current_offers.append(new_offer)
+                applied_count += 1
+        
+        # Update cart with new offers
+        cart.applied_offers = current_offers
+        cart.save()
         
         return Response({
-            'most_ordered': ProductSerializer(most_ordered, many=True).data,
-            'most_popular': ProductSerializer(most_popular, many=True).data,
-            'knn_recommendations': knn_recommendations,
-            'best_ml_recommendations': best_ml_recommendations
+            'success': True,
+            'applied_offers': applied_count,
+            'message': f'{applied_count} offers applied automatically'
         })
     except Exception as e:
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -636,18 +719,34 @@ def admin_stats(request):
     if not request.user.is_staff:
         return Response({'error': 'Admin access required'}, status=status.HTTP_403_FORBIDDEN)
     
-    from .revenue_utils import get_total_revenue
-    
-    total_revenue = get_total_revenue()
-    
-    analytics_data = {
-        'total_revenue': total_revenue,
-        'total_orders': Order.objects.count(),
-        'total_users': User.objects.count(),
-        'total_products': Product.objects.count()
-    }
-    
-    return Response(analytics_data)
+    try:
+        from django.db.models import Sum
+        
+        # Calculate total revenue using total_amount as fallback
+        total_revenue_query = Order.objects.aggregate(
+            final_total=Sum('final_amount'),
+            base_total=Sum('total_amount')
+        )
+        
+        total_revenue = total_revenue_query['final_total'] or total_revenue_query['base_total'] or 0
+        
+        analytics_data = {
+            'total_revenue': float(total_revenue),
+            'total_orders': Order.objects.count(),
+            'total_users': User.objects.count(),
+            'total_products': Product.objects.count()
+        }
+        
+        return Response(analytics_data)
+    except Exception as e:
+        # Return basic stats without revenue if there's an error
+        return Response({
+            'total_revenue': 0.0,
+            'total_orders': Order.objects.count(),
+            'total_users': User.objects.count(),
+            'total_products': Product.objects.count(),
+            'error': str(e)
+        })
 
 # Admin CRUD Operations
 @api_view(['GET'])
@@ -730,32 +829,25 @@ def admin_update_product(request, product_id):
             # Ensure unique slug
             slug = base_slug
             counter = 1
-            while Product.objects.filter(slug=slug).exclude(id=product.id).exists():
+            while Product.objects.filter(slug=slug).exclude(id=product_id).exists():
                 slug = f"{base_slug}-{counter}"
                 counter += 1
             product.slug = slug
         
-        # Update price - save exactly as entered
-        if 'price' in request.data:
-            product.price = request.data['price']
-        
         # Update other fields
-        product.description = request.data.get('description', product.description)
-        product.actual_price = request.data.get('actual_price', product.actual_price)
-        product.discount_percentage = request.data.get('discount_percentage', product.discount_percentage)
-        product.offer_text = request.data.get('offer_text', product.offer_text)
-        product.exchange_available = request.data.get('exchange_available', product.exchange_available)
-        product.exchange_discount = request.data.get('exchange_discount', product.exchange_discount)
-        product.stock = int(request.data.get('stock', product.stock))
-        product.image_url = request.data.get('image_url', product.image_url)
-        product.image_urls = request.data.get('image_urls', product.image_urls)
-        product.video_url = request.data.get('video_url', product.video_url)
-        product.video_file = request.data.get('video_file', product.video_file)
+        for field in ['description', 'price', 'actual_price', 'discount_percentage', 
+                     'offer_text', 'exchange_available', 'exchange_discount', 
+                     'stock', 'image_url', 'image_urls', 'video_url', 'video_file']:
+            if field in request.data:
+                setattr(product, field, request.data[field])
         
         # Update category
         if 'category' in request.data:
-            category = get_object_or_404(Category, slug=request.data['category'])
-            product.category = category
+            try:
+                category = Category.objects.get(slug=request.data['category'])
+                product.category = category
+            except Category.DoesNotExist:
+                pass
         
         product.save()
         serializer = ProductSerializer(product)
@@ -769,9 +861,29 @@ def admin_delete_product(request, product_id):
     if not request.user.is_staff:
         return Response({'error': 'Admin access required'}, status=status.HTTP_403_FORBIDDEN)
     
-    product = get_object_or_404(Product, id=product_id)
-    product.delete()
-    return Response({'message': 'Product deleted successfully'})
+    try:
+        product = get_object_or_404(Product, id=product_id)
+        product.delete()
+        return Response({'message': 'Product deleted successfully'})
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def admin_toggle_product_availability(request, product_id):
+    if not request.user.is_staff:
+        return Response({'error': 'Admin access required'}, status=status.HTTP_403_FORBIDDEN)
+    
+    try:
+        product = get_object_or_404(Product, id=product_id)
+        product.available = not product.available
+        product.save()
+        return Response({
+            'message': f'Product {"enabled" if product.available else "disabled"} successfully',
+            'available': product.available
+        })
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
