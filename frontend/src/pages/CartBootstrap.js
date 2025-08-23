@@ -17,22 +17,27 @@ const CartBootstrap = () => {
       // Auto-apply offers when cart loads
       const autoApplyOffers = async () => {
         try {
-          const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:8000/api'}/cart/auto-apply-offers/`, {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
-              'Content-Type': 'application/json',
-            },
-          });
-          
+          const response = await fetch(
+            `${
+              process.env.REACT_APP_API_URL || "http://localhost:8000/api"
+            }/cart/auto-apply-offers/`,
+            {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
           if (response.ok) {
             await fetchCart(); // Refresh cart to show applied offers
           }
         } catch (error) {
-          console.error('Auto-apply offers failed:', error);
+          console.error("Auto-apply offers failed:", error);
         }
       };
-      
+
       autoApplyOffers();
     }
   }, [isAuthenticated, cart.items?.length]);
@@ -228,47 +233,6 @@ const CartBootstrap = () => {
           <div className="card bg-light border">
             <div className="card-body">
               <h5 className="card-title">Order Summary</h5>
-              <hr />
-
-              <div className="mb-4">
-                <p className="small fw-medium text-uppercase mb-2">
-                  Delivery Address
-                </p>
-                <div className="d-flex justify-content-between align-items-start">
-                  <p className="text-muted mb-0">No address found</p>
-                  <button
-                    onClick={() => setShowAddress(!showAddress)}
-                    className="btn btn-link btn-sm text-primary p-0"
-                  >
-                    Change
-                  </button>
-                </div>
-                {showAddress && (
-                  <div className="dropdown-menu show position-relative w-100 mt-2">
-                    <button
-                      onClick={() => setShowAddress(false)}
-                      className="dropdown-item text-muted"
-                    >
-                      New York, USA
-                    </button>
-                    <button
-                      onClick={() => setShowAddress(false)}
-                      className="dropdown-item text-primary text-center"
-                    >
-                      Add address
-                    </button>
-                  </div>
-                )}
-
-                <p className="small fw-medium text-uppercase mt-4 mb-2">
-                  Payment Method
-                </p>
-                <select className="form-select">
-                  <option value="COD">Cash On Delivery</option>
-                  <option value="Online">Online Payment</option>
-                </select>
-              </div>
-
               <hr />
 
               <div className="text-muted">

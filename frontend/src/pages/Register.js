@@ -25,21 +25,26 @@ const Register = () => {
   const validateField = (name, value) => {
     switch (name) {
       case "first_name":
+        if (value.includes(' ')) return "First name cannot contain spaces";
         return value.length < 2
           ? "First name must be at least 2 characters"
           : "";
       case "last_name":
+        if (value.includes(' ')) return "Last name cannot contain spaces";
         return value.length < 2
           ? "Last name must be at least 2 characters"
           : "";
       case "username":
+        if (value.includes(' ')) return "Username cannot contain spaces";
         return value.length < 3 ? "Username must be at least 3 characters" : "";
       case "email":
+        if (value.includes(' ')) return "Email cannot contain spaces";
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return !emailRegex.test(value)
           ? "Please enter a valid email address"
           : "";
       case "password":
+        if (value.includes(' ')) return "Password cannot contain spaces";
         return value.length < 6 ? "Password must be at least 6 characters" : "";
       case "password_confirm":
         return value !== formData.password ? "Passwords do not match" : "";
